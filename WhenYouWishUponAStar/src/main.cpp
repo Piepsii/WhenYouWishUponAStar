@@ -2,24 +2,15 @@
 #include "Simulation.h"
 #include "InputManager.h"
 #include "Time.h"
+#include "StaticVariables.h"
 
 int main() {
     sf::VideoMode videoMode;
     const char* title = "When You Wish Upon A*";
     InputManager input;
-
-    const uint32_t width = 1000;
-    const uint32_t height = width;
-    const uint32_t columns = 30;
-    const uint32_t rows = 30;
-    const uint32_t tileSize = width / columns;
-
-    Simulation* sim = new Simulation(width,
-                                     height,
-                                     columns,
-                                     rows,
-                                     tileSize);
-    sf::RenderWindow window(sf::VideoMode(width, height), title);
+    
+    Simulation* sim = Simulation::Instance();
+    sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), title);
 
     sf::Clock clock;
     sf::Time delta;
@@ -68,9 +59,6 @@ int main() {
         sf::Time delay(sf::seconds(frameTime - delta.asSeconds()));
         sf::sleep(delay);
     }
-
-    delete sim;
-    sim = nullptr;
 
     return 0;
 }

@@ -271,11 +271,11 @@ private:
     ////////////////////////////////////////////////////////////
     struct Row
     {
-        Row(unsigned int rowTop, unsigned int rowHeight) : width(0), top(rowTop), height(rowHeight) {}
+        Row(unsigned int rowTop, unsigned int rowHeight) : WIDTH(0), top(rowTop), HEIGHT(rowHeight) {}
 
-        unsigned int width;  ///< Current width of the row
+        unsigned int WIDTH;  ///< Current width of the row
         unsigned int top;    ///< Y position of the row into the texture
-        unsigned int height; ///< Height of the row
+        unsigned int HEIGHT; ///< Height of the row
     };
 
     ////////////////////////////////////////////////////////////
@@ -326,7 +326,7 @@ private:
     /// \return Found rectangle within the texture
     ///
     ////////////////////////////////////////////////////////////
-    IntRect findGlyphRect(Page& page, unsigned int width, unsigned int height) const;
+    IntRect findGlyphRect(Page& page, unsigned int WIDTH, unsigned int HEIGHT) const;
 
     ////////////////////////////////////////////////////////////
     /// \brief Make sure that the given size is the current one

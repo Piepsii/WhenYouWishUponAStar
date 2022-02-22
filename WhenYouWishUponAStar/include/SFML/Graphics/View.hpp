@@ -99,7 +99,7 @@ public:
     /// \see setCenter, getCenter
     ///
     ////////////////////////////////////////////////////////////
-    void setSize(float width, float height);
+    void setSize(float WIDTH, float HEIGHT);
 
     ////////////////////////////////////////////////////////////
     /// \brief Set the size of the view

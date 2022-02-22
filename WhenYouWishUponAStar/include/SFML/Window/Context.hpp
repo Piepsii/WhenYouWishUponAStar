@@ -143,7 +143,7 @@ public:
     /// \param height   Back buffer height
     ///
     ////////////////////////////////////////////////////////////
-    Context(const ContextSettings& settings, unsigned int width, unsigned int height);
+    Context(const ContextSettings& settings, unsigned int WIDTH, unsigned int HEIGHT);
 
 private:
 

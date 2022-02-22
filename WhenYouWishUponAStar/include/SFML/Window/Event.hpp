@@ -51,8 +51,8 @@ public:
     ////////////////////////////////////////////////////////////
     struct SizeEvent
     {
-        unsigned int width;  ///< New width, in pixels
-        unsigned int height; ///< New height, in pixels
+        unsigned int WIDTH;  ///< New width, in pixels
+        unsigned int HEIGHT; ///< New height, in pixels
     };
 
     ////////////////////////////////////////////////////////////

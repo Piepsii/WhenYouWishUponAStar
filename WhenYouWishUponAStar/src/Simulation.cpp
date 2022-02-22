@@ -2,26 +2,35 @@
 
 #include "Simulation.h"
 
-Simulation::Simulation(uint32_t _screenWidth,
-					   uint32_t _screenHeight,
-					   uint32_t _columns,
-					   uint32_t _rows,
-					   uint32_t _tileSize)
-	: screenWidth(_screenWidth)
-	, screenHeight(_screenHeight)
+Simulation::Simulation()
 {
 	srand(time(0));
+	grid = new Grid();
 }
 
 Simulation::~Simulation()
 {
+	delete instance;
+	instance = nullptr;
 }
 
-bool Simulation::update(float deltaTime)
+Simulation* Simulation::instance = nullptr;
+
+Simulation* Simulation::Instance()
 {
+	if (instance == nullptr) {
+		instance = new Simulation();
+	}
+	return instance;
+}
+
+bool Simulation::update(float _deltaTime)
+{
+	grid->update(_deltaTime);
 	return true;
 }
 
 void Simulation::draw(sf::RenderWindow& _window)
 {
+	grid->draw(_window);
 }

@@ -94,7 +94,7 @@ public:
     /// \return True if creation was successful
     ///
     ////////////////////////////////////////////////////////////
-    bool create(unsigned int width, unsigned int height);
+    bool create(unsigned int WIDTH, unsigned int HEIGHT);
 
     ////////////////////////////////////////////////////////////
     /// \brief Load the texture from a file on disk
@@ -275,7 +275,7 @@ public:
     /// \param y      Y offset in the texture where to copy the source pixels
     ///
     ////////////////////////////////////////////////////////////
-    void update(const Uint8* pixels, unsigned int width, unsigned int height, unsigned int x, unsigned int y);
+    void update(const Uint8* pixels, unsigned int WIDTH, unsigned int HEIGHT, unsigned int x, unsigned int y);
 
     ////////////////////////////////////////////////////////////
     /// \brief Update a part of this texture from another texture

@@ -1,26 +1,30 @@
 #include "Grid.h"
+#include "StaticVariables.h"
 
-Grid* Grid::instance = nullptr;
-
-Grid* Grid::Instance()
+Grid::Grid()
 {
-	if (instance == nullptr) {
-		instance = new Grid();
+	float nodeWidth = WIDTH / columns;
+	float nodeHeight = HEIGHT / rows;
+
+	for (int i = 0; i < columns; i++) {
+		for (int j = 0; j < rows; j++) {
+			graph[j * columns + i] = Node(i, j, nodeWidth, nodeHeight);
+		}
 	}
-	return instance;
 }
 
-void Grid::createGrid(uint32_t _columns,
-					  uint32_t _rows,
-					  uint32_t _tileSize)
+void Grid::update(float _deltaTime)
 {
-	columns = _columns;
-	rows = _rows;
-	tileSize = _tileSize;
+	for (int i = 0; i < size; i++) {
+		graph[i].update(_deltaTime);
+	}
 }
 
-void Grid::update()
+void Grid::draw(sf::RenderWindow& _window)
 {
+	for (int i = 0; i < size; i++) {
+		graph[i].draw(_window);
+	}
 }
 
 uint32_t Grid::Columns()
@@ -31,11 +35,6 @@ uint32_t Grid::Columns()
 uint32_t Grid::Rows()
 {
 	return rows;
-}
-
-uint32_t Grid::TileSize()
-{
-	return tileSize;
 }
 
 uint32_t Grid::Size()
@@ -72,15 +71,4 @@ uint32_t Grid::GetRandomNeighborAsIndex(sf::Vector2i _pos)
 
 	uint32_t index = neighborY * columns + neighborX;
 	return index;
-}
-
-Grid::Grid() 
-{
-
-}
-
-Grid::~Grid()
-{
-	delete instance;
-	instance = nullptr;
 }

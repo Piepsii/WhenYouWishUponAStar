@@ -156,8 +156,8 @@ public:
     ////////////////////////////////////////////////////////////
     T left;   ///< Left coordinate of the rectangle
     T top;    ///< Top coordinate of the rectangle
-    T width;  ///< Width of the rectangle
-    T height; ///< Height of the rectangle
+    T WIDTH;  ///< Width of the rectangle
+    T HEIGHT; ///< Height of the rectangle
 };
 
 ////////////////////////////////////////////////////////////

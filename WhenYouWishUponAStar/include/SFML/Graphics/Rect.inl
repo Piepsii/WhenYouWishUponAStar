@@ -28,8 +28,8 @@ template <typename T>
 Rect<T>::Rect() :
 left  (0),
 top   (0),
-width (0),
-height(0)
+WIDTH (0),
+HEIGHT(0)
 {
 
 }
@@ -40,8 +40,8 @@ template <typename T>
 Rect<T>::Rect(T rectLeft, T rectTop, T rectWidth, T rectHeight) :
 left  (rectLeft),
 top   (rectTop),
-width (rectWidth),
-height(rectHeight)
+WIDTH (rectWidth),
+HEIGHT(rectHeight)
 {
 
 }
@@ -52,8 +52,8 @@ template <typename T>
 Rect<T>::Rect(const Vector2<T>& position, const Vector2<T>& size) :
 left  (position.x),
 top   (position.y),
-width (size.x),
-height(size.y)
+WIDTH (size.x),
+HEIGHT(size.y)
 {
 
 }
@@ -65,8 +65,8 @@ template <typename U>
 Rect<T>::Rect(const Rect<U>& rectangle) :
 left  (static_cast<T>(rectangle.left)),
 top   (static_cast<T>(rectangle.top)),
-width (static_cast<T>(rectangle.width)),
-height(static_cast<T>(rectangle.height))
+WIDTH (static_cast<T>(rectangle.WIDTH)),
+HEIGHT(static_cast<T>(rectangle.HEIGHT))
 {
 }
 
@@ -78,10 +78,10 @@ bool Rect<T>::contains(T x, T y) const
     // Rectangles with negative dimensions are allowed, so we must handle them correctly
 
     // Compute the real min and max of the rectangle on both axes
-    T minX = std::min(left, static_cast<T>(left + width));
-    T maxX = std::max(left, static_cast<T>(left + width));
-    T minY = std::min(top, static_cast<T>(top + height));
-    T maxY = std::max(top, static_cast<T>(top + height));
+    T minX = std::min(left, static_cast<T>(left + WIDTH));
+    T maxX = std::max(left, static_cast<T>(left + WIDTH));
+    T minY = std::min(top, static_cast<T>(top + HEIGHT));
+    T maxY = std::max(top, static_cast<T>(top + HEIGHT));
 
     return (x >= minX) && (x < maxX) && (y >= minY) && (y < maxY);
 }
@@ -111,16 +111,16 @@ bool Rect<T>::intersects(const Rect<T>& rectangle, Rect<T>& intersection) const
     // Rectangles with negative dimensions are allowed, so we must handle them correctly
 
     // Compute the min and max of the first rectangle on both axes
-    T r1MinX = std::min(left, static_cast<T>(left + width));
-    T r1MaxX = std::max(left, static_cast<T>(left + width));
-    T r1MinY = std::min(top, static_cast<T>(top + height));
-    T r1MaxY = std::max(top, static_cast<T>(top + height));
+    T r1MinX = std::min(left, static_cast<T>(left + WIDTH));
+    T r1MaxX = std::max(left, static_cast<T>(left + WIDTH));
+    T r1MinY = std::min(top, static_cast<T>(top + HEIGHT));
+    T r1MaxY = std::max(top, static_cast<T>(top + HEIGHT));
 
     // Compute the min and max of the second rectangle on both axes
-    T r2MinX = std::min(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
-    T r2MaxX = std::max(rectangle.left, static_cast<T>(rectangle.left + rectangle.width));
-    T r2MinY = std::min(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
-    T r2MaxY = std::max(rectangle.top, static_cast<T>(rectangle.top + rectangle.height));
+    T r2MinX = std::min(rectangle.left, static_cast<T>(rectangle.left + rectangle.WIDTH));
+    T r2MaxX = std::max(rectangle.left, static_cast<T>(rectangle.left + rectangle.WIDTH));
+    T r2MinY = std::min(rectangle.top, static_cast<T>(rectangle.top + rectangle.HEIGHT));
+    T r2MaxY = std::max(rectangle.top, static_cast<T>(rectangle.top + rectangle.HEIGHT));
 
     // Compute the intersection boundaries
     T interLeft   = std::max(r1MinX, r2MinX);
@@ -146,8 +146,8 @@ bool Rect<T>::intersects(const Rect<T>& rectangle, Rect<T>& intersection) const
 template <typename T>
 inline bool operator ==(const Rect<T>& left, const Rect<T>& right)
 {
-    return (left.left == right.left) && (left.width == right.width) &&
-           (left.top == right.top) && (left.height == right.height);
+    return (left.left == right.left) && (left.WIDTH == right.WIDTH) &&
+           (left.top == right.top) && (left.HEIGHT == right.HEIGHT);
 }
 
 

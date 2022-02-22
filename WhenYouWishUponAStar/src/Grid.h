@@ -1,35 +1,27 @@
 #pragma once
 
-#include <vector>
+#include <array>
 #include <SFML/System.hpp>
+#include <SFML/Graphics.hpp>
+
+#include "Node.h"
 
 class Grid
 {
 public:
-	static Grid* Instance();
-	void createGrid(uint32_t _columns = 10,
-		 uint32_t _rows = 10,
-		 uint32_t _tileSize = 64);
-	void update();
+	Grid();
+	void update(float _deltaTime);
+	void draw(sf::RenderWindow& _window);
 	uint32_t Columns();
 	uint32_t Rows();
-	uint32_t TileSize();
 	uint32_t Size();
 	sf::Vector2i GetRandomNeighbor(sf::Vector2i _pos);
 	uint32_t GetRandomNeighborAsIndex(sf::Vector2i _pos);
 
-	Grid(Grid& other) = delete;
-	void operator=(const Grid&) = delete;
-
-protected:
-	static Grid* instance;
-
 private:
-	Grid();
-	~Grid();
-
-	uint32_t columns, rows;
-	uint32_t size;
-	uint32_t tileSize;
+	const static uint32_t columns = 10;
+	const static uint32_t rows = 10;
+	const static uint32_t size = columns * rows;
+	Node graph[size];
 };
 
