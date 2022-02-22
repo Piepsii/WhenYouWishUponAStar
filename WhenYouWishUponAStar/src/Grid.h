@@ -22,6 +22,8 @@ private:
 	const static uint32_t columns = 10;
 	const static uint32_t rows = 10;
 	const static uint32_t size = columns * rows;
+	const static uint32_t edgeAmount = 2 * size - columns - rows;
 	Node graph[size];
+	sf::RectangleShape edges[edgeAmount];
 };
 

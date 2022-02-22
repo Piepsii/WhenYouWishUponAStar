@@ -11,6 +11,11 @@ Grid::Grid()
 			graph[j * columns + i] = Node(i, j, nodeWidth, nodeHeight);
 		}
 	}
+
+	for (int i = 0; i < columns - 1; i++) {
+		for (int j = 0; j < rows - 1; j++) {
+		}
+	}
 }
 
 void Grid::update(float _deltaTime)
