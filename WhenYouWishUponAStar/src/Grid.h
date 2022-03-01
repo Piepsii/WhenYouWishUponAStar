@@ -5,6 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "Node.h"
+#include "Cell.h"
 
 class Grid
 {
@@ -23,7 +24,8 @@ private:
 	const static uint32_t rows = 10;
 	const static uint32_t size = columns * rows;
 	const static uint32_t edgeAmount = 2 * size - columns - rows;
-	Node graph[size];
+	Cell cells[size];
+
 	sf::RectangleShape edges[edgeAmount];
 };
 
