@@ -7,6 +7,8 @@
 Node::Node(Cell& _cell)
 {
 	cell = &_cell;
+	x = cell->x;
+	y = cell->y;
 	float radius = cell->width / 3;
 	shape = sf::CircleShape(radius);
 	shape.setFillColor(sf::Color::White);

@@ -15,10 +15,13 @@ public:
 	void draw(sf::RenderWindow& _window);
 	void setColor(sf::Color _color);
 
-private:
-	int h = INT_MAX;
-	int g = INT_MAX;
+	int x;
+	int y;
 	int f = INT_MAX;
+	int g = INT_MAX;
+	int h = INT_MAX;
+
+private:
 	Cell* cell;
 	Node* parent;
 	std::vector<sf::RectangleShape> edges;

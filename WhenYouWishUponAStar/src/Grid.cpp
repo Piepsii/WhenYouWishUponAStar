@@ -109,3 +109,28 @@ Cell* Grid::getCell(int _index)
 {
 	return cells[_index].get();
 }
+
+std::vector<Cell*> Grid::getAllNeighbors(int _x, int _y)
+{
+	std::vector<Cell*> result;
+	result.push_back(getCell(_x - 1, _y - 1));
+	result.push_back(getCell(_x    , _y - 1));
+	result.push_back(getCell(_x + 1, _y - 1));
+	result.push_back(getCell(_x - 1, _y    ));
+
+	result.push_back(getCell(_x + 1, _y	   ));
+	result.push_back(getCell(_x - 1, _y + 1));
+	result.push_back(getCell(_x	   , _y + 1));
+	result.push_back(getCell(_x + 1, _y + 1));
+
+	std::vector<int> indeces;
+	for (int i = 0; i < result.size(); i++) {
+		if (result[i] == nullptr)
+			indeces.push_back(i);
+	}
+	std::sort(indeces.begin(), indeces.end());
+	for (int i = indeces.size() - 1; i >= 0 ; i--) {
+		result.erase(result.begin() + indeces[i]);
+	}
+	return result;
+}

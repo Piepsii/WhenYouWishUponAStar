@@ -23,6 +23,7 @@ public:
 	Cell* getRandomCell(bool _includeBlocked = false);
 	Cell* getCell(int _x, int _y);
 	Cell* getCell(int _index);
+	std::vector<Cell*> getAllNeighbors(int _x, int _y);
 
 private:
 	const static uint32_t columns = COLUMNS;

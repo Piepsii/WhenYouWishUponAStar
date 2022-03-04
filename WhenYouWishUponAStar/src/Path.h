@@ -10,12 +10,14 @@ public:
 	Path(Grid& _grid, int _sX, int _sY, int _tX, int _tY);
 
 	void find();
+	bool isNodeInList(Node* _node, std::vector<Node*> _list);
 
 private:
 	Node* start;
 	Node* target;
-	std::vector<Node> open;
-	std::vector<Node> closed;
+	Node* current;
+	std::vector<Node*> open;
+	std::vector<Node*> closed;
 	Grid* grid;
 };
 
