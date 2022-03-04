@@ -5,6 +5,8 @@
 
 #include "Grid.h"
 #include "Path.h"
+#include "Player.h"
+#include "InputManager.h"
 
 class Simulation
 {
@@ -15,6 +17,7 @@ public:
 	void draw(sf::RenderWindow& _window);
 	Simulation(Simulation& other) = delete;
 	void operator=(const Simulation&) = delete;
+	void setInput(InputManager& _input);
 
 protected:
 	static Simulation* instance;
@@ -26,5 +29,6 @@ private:
 	bool hasStarted = false;
 	std::unique_ptr<Grid> grid = nullptr;
 	std::unique_ptr<Path> path = nullptr;
+	std::unique_ptr<Player> player = nullptr;
 };
 

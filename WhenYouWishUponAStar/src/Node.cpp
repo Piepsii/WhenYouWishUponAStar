@@ -18,10 +18,16 @@ Node::Node(Cell& _cell)
 
 void Node::update(float _deltaTime)
 {
+	if (!isActive)
+		return;
+
 }
 
 void Node::draw(sf::RenderWindow& _window)
 {
+	if (!isActive)
+		return;
+
 	_window.draw(shape);
 }
 

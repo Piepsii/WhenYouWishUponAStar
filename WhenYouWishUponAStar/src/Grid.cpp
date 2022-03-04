@@ -20,6 +20,9 @@ Grid::Grid()
 
 void Grid::update(float _deltaTime)
 {
+	if (!isActive)
+		return;
+
 	for (int i = 0; i < size; i++) {
 		cells[i]->update(_deltaTime);
 	}
@@ -27,6 +30,9 @@ void Grid::update(float _deltaTime)
 
 void Grid::draw(sf::RenderWindow& _window)
 {
+	if (!isActive)
+		return;
+
 	for (int i = 0; i < size; i++) {
 		cells[i]->draw(_window);
 	}

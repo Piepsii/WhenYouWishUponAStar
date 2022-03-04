@@ -10,6 +10,7 @@ int main() {
     InputManager input;
     
     Simulation* sim = Simulation::Instance();
+    sim->setInput(input);
     sf::RenderWindow window(sf::VideoMode(WIDTH, HEIGHT), title);
 
     sf::Clock clock;

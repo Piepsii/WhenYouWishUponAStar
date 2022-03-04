@@ -28,10 +28,15 @@ Cell::Cell(int _x, int _y, float _width, float _height)
 
 void Cell::update(float _deltaTime)
 {
+	if (!isActive)
+		return;
 }
 
 void Cell::draw(sf::RenderWindow& _window)
 {
+	if (!isActive)
+		return;
+
 	_window.draw(shape);
 	if(node)
 		node->draw(_window);

@@ -3,9 +3,11 @@
 #include <SFML/Graphics.hpp>
 #include <vector>
 
+#include "GameObject.h"
+
 class Cell;
 
-class Node
+class Node : public GameObject
 {
 public:
 	Node(Cell& _cell);

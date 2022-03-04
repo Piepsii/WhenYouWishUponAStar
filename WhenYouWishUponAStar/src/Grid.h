@@ -4,10 +4,11 @@
 #include <SFML/System.hpp>
 #include <SFML/Graphics.hpp>
 
+#include "GameObject.h"
 #include "Node.h"
 #include "Cell.h"
 
-class Grid
+class Grid : public GameObject
 {
 public:
 	Grid();

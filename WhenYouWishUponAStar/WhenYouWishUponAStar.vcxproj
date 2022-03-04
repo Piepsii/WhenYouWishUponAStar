@@ -154,6 +154,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Player.cpp" />
+    <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Path.cpp" />
     <ClCompile Include="src\Cell.cpp" />
     <ClCompile Include="src\Node.cpp" />
@@ -170,6 +172,8 @@
     <ClCompile Include="src\Starchaser.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="src\Player.h" />
+    <ClInclude Include="src\GameObject.h" />
     <ClInclude Include="src\Path.h" />
     <ClInclude Include="src\Cell.h" />
     <ClInclude Include="src\Node.h" />

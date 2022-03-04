@@ -1,5 +1,3 @@
-// Simulation.cpp
-
 #include "Simulation.h"
 
 Simulation::Simulation()
@@ -7,6 +5,7 @@ Simulation::Simulation()
 	srand(time(0));
 	grid = std::make_unique<Grid>();
 	path = std::make_unique<Path>(*grid, 0, 0, 5, 5);
+	player = std::make_unique<Player>();
 }
 
 Simulation::~Simulation()
@@ -39,3 +38,8 @@ void Simulation::draw(sf::RenderWindow& _window)
 {
 	grid->draw(_window);
 }
+
+void Simulation::setInput(InputManager& _input) {
+	player->input = &_input;
+}
+

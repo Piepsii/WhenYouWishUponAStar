@@ -1,8 +1,9 @@
 #pragma once
 
+#include "GameObject.h"
 #include "Node.h"
 
-class Cell
+class Cell : public GameObject
 {
 public:
 	Cell(int _x = 0,
