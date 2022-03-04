@@ -8,7 +8,7 @@ Grid::Grid()
 
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			cells[j * columns + i] = Cell(i, j, cellWidth, cellHeight);
+			cells[j * columns + i] = std::make_unique<Cell>(i, j, cellWidth, cellHeight);
 		}
 	}
 
@@ -21,14 +21,14 @@ Grid::Grid()
 void Grid::update(float _deltaTime)
 {
 	for (int i = 0; i < size; i++) {
-		cells[i].update(_deltaTime);
+		cells[i]->update(_deltaTime);
 	}
 }
 
 void Grid::draw(sf::RenderWindow& _window)
 {
 	for (int i = 0; i < size; i++) {
-		cells[i].draw(_window);
+		cells[i]->draw(_window);
 	}
 }
 
@@ -76,4 +76,14 @@ uint32_t Grid::GetRandomNeighborAsIndex(sf::Vector2i _pos)
 
 	uint32_t index = neighborY * columns + neighborX;
 	return index;
+}
+
+Cell* Grid::getCell(int _x, int _y)
+{
+	if (_x < 0 || _x >= columns ||
+		_y < 0 || _y >= rows)
+		return nullptr;
+
+	uint32_t index = _y * columns + _x;
+	return cells[index].get();
 }

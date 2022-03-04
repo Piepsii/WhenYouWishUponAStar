@@ -4,6 +4,7 @@
 #include <random>
 
 #include "Grid.h"
+#include "Path.h"
 
 class Simulation
 {
@@ -22,6 +23,8 @@ private:
 	Simulation();
 	~Simulation();
 
-	Grid* grid;
+	bool hasStarted = false;
+	std::unique_ptr<Grid> grid = nullptr;
+	std::unique_ptr<Path> path = nullptr;
 };
 

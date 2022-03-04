@@ -11,15 +11,21 @@ public:
 		 float _height = 32.f);
 	void update(float _deltaTime);
 	void draw(sf::RenderWindow& _window);
+	Node* getNode();
 
+	bool isBlocked = false;
 	int x;
 	int y;
-	std::unique_ptr<Node> node;
-
-private:
 	float width = 32.f;
 	float height = 32.f;
-	sf::CircleShape center;
+
+private:
+	float outlineThickness = 3.5f;
+	std::unique_ptr<Node> node;
+	sf::RectangleShape shape;
+	sf::Color normalColor = sf::Color::White;
+	sf::Color blockedColor = sf::Color::Black;
+	sf::Color outlineColor = sf::Color::Black;
 
 };
 

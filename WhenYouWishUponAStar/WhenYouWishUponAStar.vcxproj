@@ -167,6 +167,7 @@
       <AdditionalIncludeDirectories Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(ProjectDir)\include</AdditionalIncludeDirectories>
     </ClCompile>
     <ClCompile Include="src\Time.cpp" />
+    <ClCompile Include="src\Starchaser.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\Path.h" />
@@ -177,6 +178,7 @@
     <ClInclude Include="src\Simulation.h" />
     <ClInclude Include="src\StaticVariables.h" />
     <ClInclude Include="src\Time.h" />
+    <ClInclude Include="src\Starchaser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

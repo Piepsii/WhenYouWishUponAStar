@@ -18,13 +18,14 @@ public:
 	uint32_t Size();
 	sf::Vector2i GetRandomNeighbor(sf::Vector2i _pos);
 	uint32_t GetRandomNeighborAsIndex(sf::Vector2i _pos);
+	Cell* getCell(int _x, int _y);
 
 private:
 	const static uint32_t columns = 10;
 	const static uint32_t rows = 10;
 	const static uint32_t size = columns * rows;
 	const static uint32_t edgeAmount = 2 * size - columns - rows;
-	Cell cells[size];
+	std::unique_ptr<Cell> cells[size];
 
 	sf::RectangleShape edges[edgeAmount];
 };

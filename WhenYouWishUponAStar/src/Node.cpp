@@ -4,11 +4,16 @@
 
 #include "Cell.h"
 
-Node::Node()
+Node::Node(Cell& _cell)
 {
-	if (rand() % 100 < 20) {
-		isBlocked = true;
-	}
+	cell = &_cell;
+	float radius = cell->width / 3;
+	shape = sf::CircleShape(radius);
+	shape.setFillColor(sf::Color::White);
+	shape.setPosition(cell->x * cell->width + cell->width / 2,
+					  cell->y * cell->height + cell->height / 2);
+	shape.setOrigin(radius,
+					radius);
 }
 
 void Node::update(float _deltaTime)
@@ -17,4 +22,10 @@ void Node::update(float _deltaTime)
 
 void Node::draw(sf::RenderWindow& _window)
 {
+	_window.draw(shape);
+}
+
+void Node::setColor(sf::Color _color)
+{
+	shape.setFillColor(_color);
 }

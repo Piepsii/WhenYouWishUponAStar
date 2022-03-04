@@ -5,7 +5,8 @@
 Simulation::Simulation()
 {
 	srand(time(0));
-	grid = new Grid();
+	grid = std::make_unique<Grid>();
+	path = std::make_unique<Path>(*grid, 0, 0, 5, 5);
 }
 
 Simulation::~Simulation()
@@ -26,6 +27,10 @@ Simulation* Simulation::Instance()
 
 bool Simulation::update(float _deltaTime)
 {
+	if (!hasStarted) {
+		path->find();
+		hasStarted = true;
+	}
 	grid->update(_deltaTime);
 	return true;
 }
