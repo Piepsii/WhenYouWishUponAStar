@@ -27,10 +27,13 @@ Simulation* Simulation::Instance()
 bool Simulation::update(float _deltaTime)
 {
 	if (!hasStarted) {
+		player->grid = grid.get();
 		path->find();
 		hasStarted = true;
 	}
 	grid->update(_deltaTime);
+	player->update(_deltaTime);
+	input->update();
 	return true;
 }
 
@@ -40,6 +43,7 @@ void Simulation::draw(sf::RenderWindow& _window)
 }
 
 void Simulation::setInput(InputManager& _input) {
+	input = &_input;
 	player->input = &_input;
 }
 

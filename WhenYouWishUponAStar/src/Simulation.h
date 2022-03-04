@@ -27,6 +27,7 @@ private:
 	~Simulation();
 
 	bool hasStarted = false;
+	InputManager* input = nullptr;
 	std::unique_ptr<Grid> grid = nullptr;
 	std::unique_ptr<Path> path = nullptr;
 	std::unique_ptr<Player> player = nullptr;

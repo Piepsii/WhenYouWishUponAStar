@@ -7,6 +7,7 @@
 #include "GameObject.h"
 #include "Node.h"
 #include "Cell.h"
+#include "StaticVariables.h"
 
 class Grid : public GameObject
 {
@@ -19,11 +20,13 @@ public:
 	uint32_t Size();
 	sf::Vector2i GetRandomNeighbor(sf::Vector2i _pos);
 	uint32_t GetRandomNeighborAsIndex(sf::Vector2i _pos);
+	Cell* getRandomCell(bool _includeBlocked = false);
 	Cell* getCell(int _x, int _y);
+	Cell* getCell(int _index);
 
 private:
-	const static uint32_t columns = 10;
-	const static uint32_t rows = 10;
+	const static uint32_t columns = COLUMNS;
+	const static uint32_t rows = ROWS;
 	const static uint32_t size = columns * rows;
 	const static uint32_t edgeAmount = 2 * size - columns - rows;
 	std::unique_ptr<Cell> cells[size];

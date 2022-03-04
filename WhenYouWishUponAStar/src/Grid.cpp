@@ -3,12 +3,9 @@
 
 Grid::Grid()
 {
-	float cellWidth = WIDTH / columns;
-	float cellHeight = HEIGHT / rows;
-
 	for (int i = 0; i < columns; i++) {
 		for (int j = 0; j < rows; j++) {
-			cells[j * columns + i] = std::make_unique<Cell>(i, j, cellWidth, cellHeight);
+			cells[j * columns + i] = std::make_unique<Cell>(i, j);
 		}
 	}
 
@@ -84,6 +81,20 @@ uint32_t Grid::GetRandomNeighborAsIndex(sf::Vector2i _pos)
 	return index;
 }
 
+Cell* Grid::getRandomCell(bool _includeBlocked)
+{
+	bool isBlocked = true; 
+	Cell* result;
+	do {
+		int index = rand() % size;
+		result = getCell(index);
+		isBlocked = result->isBlocked;
+		if (_includeBlocked)
+			isBlocked = false;
+	} while (isBlocked);
+	return result;
+}
+
 Cell* Grid::getCell(int _x, int _y)
 {
 	if (_x < 0 || _x >= columns ||
@@ -92,4 +103,9 @@ Cell* Grid::getCell(int _x, int _y)
 
 	uint32_t index = _y * columns + _x;
 	return cells[index].get();
+}
+
+Cell* Grid::getCell(int _index)
+{
+	return cells[_index].get();
 }
