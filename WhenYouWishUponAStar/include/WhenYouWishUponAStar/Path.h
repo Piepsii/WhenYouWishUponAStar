@@ -14,13 +14,13 @@ namespace WhenYouWishUponAStar {
 		Path(GameObject* _parent, const ComponentFamilyId _id);
 		~Path();
 
-		void initPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY);
+		void setupPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY);
+		Node* find();
 
-		void find();
-		bool isNodeInList(Node* _node, std::vector<Node*> _list);
 
 	private:
 		int manhattan(int _x, int _y);
+		bool isNodeInList(Node* _node, std::vector<Node*> _list);
 
 		Node* start;
 		Node* target;

@@ -12,7 +12,13 @@ namespace WhenYouWishUponAStar {
 
 	}
 
-	void CellObject::start(int _x, int _y)
+	void CellObject::spawn() {
+		cell = grid->getRandomCell();
+		x = cell->x;
+		y = cell->y;
+	}
+
+	void CellObject::spawn(int _x, int _y)
 	{
 		x = _x;
 		y = _y;

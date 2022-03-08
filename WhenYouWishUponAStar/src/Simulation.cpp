@@ -31,13 +31,19 @@ namespace WhenYouWishUponAStar {
 	bool Simulation::update(float _deltaTime)
 	{
 		if (!hasStarted) {
-			player->grid = grid.get();
 			hasStarted = true;
+
+			player->grid = grid.get();
+
 			auto cellObject = spaceship.addComponent<CellObject>();
 			cellObject->grid = grid.get();
-			cellObject->start(3, 3);
+			cellObject->spawn();
 			auto restable = spaceship.addComponent<Restable>();
 			restable->start();
+
+			cellObject = starchaser.addComponent<CellObject>();
+			cellObject->grid = grid.get();
+			cellObject->spawn();
 			auto path = starchaser.addComponent<Path>();
 			auto starchaserComponent = starchaser.addComponent<Starchaser>();
 		}

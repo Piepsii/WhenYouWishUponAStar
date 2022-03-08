@@ -13,7 +13,7 @@ namespace WhenYouWishUponAStar {
 
 	}
 
-	void Path::initPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY)
+	void Path::setupPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY)
 	{
 		grid = &_grid;
 
@@ -32,7 +32,7 @@ namespace WhenYouWishUponAStar {
 		current = nullptr;
 	}
 
-	void Path::find()
+	Node* Path::find()
 	{
 		open.push_back(start);
 		current = start;
@@ -79,7 +79,7 @@ namespace WhenYouWishUponAStar {
 			open.erase(open.begin() + lowestIndex);
 			if (current == target) {
 				target->drawPath();
-				return;
+				return target;
 			}
 
 			closed.push_back(current);
