@@ -14,16 +14,17 @@ public:
 	void update(float _deltaTime);
 	void draw(sf::RenderWindow& _window);
 	void setColor(sf::Color _color);
+	void drawPath();
 
 	int x;
 	int y;
 	int f = INT_MAX;
-	int g = INT_MAX;
+	int g = 0;
 	int h = INT_MAX;
+	Node* parent;
 
 private:
 	Cell* cell;
-	Node* parent;
 	std::vector<sf::RectangleShape> edges;
 	sf::CircleShape shape;
 };

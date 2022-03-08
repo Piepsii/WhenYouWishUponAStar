@@ -11,6 +11,7 @@ public:
 	void update(float _deltaTime);
 	void handleInput();
 
+	bool hasUpdatedGrid = false;
 	InputManager* input = nullptr;
 	Grid* grid = nullptr;
 private:

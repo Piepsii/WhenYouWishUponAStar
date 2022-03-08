@@ -13,6 +13,8 @@ public:
 	bool isNodeInList(Node* _node, std::vector<Node*> _list);
 
 private:
+	int manhattan(int _x, int _y);
+
 	Node* start;
 	Node* target;
 	Node* current;

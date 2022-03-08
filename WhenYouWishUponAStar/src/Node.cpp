@@ -37,3 +37,11 @@ void Node::setColor(sf::Color _color)
 {
 	shape.setFillColor(_color);
 }
+
+void Node::drawPath()
+{
+	setColor(sf::Color::Green);
+	if (parent) {
+		parent->drawPath();
+	}
+}

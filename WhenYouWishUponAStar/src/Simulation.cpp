@@ -33,6 +33,11 @@ bool Simulation::update(float _deltaTime)
 	}
 	grid->update(_deltaTime);
 	player->update(_deltaTime);
+	if (player->hasUpdatedGrid) {
+		player->hasUpdatedGrid = false;
+		path = std::make_unique<Path>(*grid, 0, 0, 5, 5);
+		path->find();
+	}
 	input->update();
 	return true;
 }

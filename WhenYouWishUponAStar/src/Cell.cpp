@@ -22,10 +22,7 @@ Cell::Cell(int _x, int _y)
 		isBlocked = true;
 	}
 
-	if (isBlocked)
-		shape.setFillColor(blockedColor);
-	else
-		node = std::make_unique<Node>(*this);
+	node = std::make_unique<Node>(*this);
 }
 
 void Cell::update(float _deltaTime)
@@ -38,6 +35,13 @@ void Cell::update(float _deltaTime)
 	}
 	else {
 		shape.setOutlineColor(outlineColor);
+	}
+
+	if (isBlocked) {
+		shape.setFillColor(blockedColor);
+	}
+	else {
+		shape.setFillColor(normalColor);
 	}
 }
 

@@ -33,6 +33,10 @@ void Player::handleInput() {
 	else if (input->isKeyPressed(sf::Keyboard::Key::Right)) {
 		selectX++;
 	}
+	else if (input->isKeyPressed(sf::Keyboard::Key::Enter)) {
+		selectedCell->isBlocked = !selectedCell->isBlocked;
+		hasUpdatedGrid = true;
+	}
 	selectX = std::clamp(selectX, 0, COLUMNS - 1);
 	selectY = std::clamp(selectY, 0, ROWS - 1);
 }
