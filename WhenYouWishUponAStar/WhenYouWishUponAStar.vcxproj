@@ -154,6 +154,9 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\Restable.cpp" />
+    <ClCompile Include="src\CellObject.cpp" />
+    <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
     <ClCompile Include="src\Path.cpp" />
@@ -172,17 +175,21 @@
     <ClCompile Include="src\Starchaser.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="src\Player.h" />
-    <ClInclude Include="src\GameObject.h" />
-    <ClInclude Include="src\Path.h" />
-    <ClInclude Include="src\Cell.h" />
-    <ClInclude Include="src\Node.h" />
-    <ClInclude Include="src\InputManager.h" />
-    <ClInclude Include="src\Grid.h" />
-    <ClInclude Include="src\Simulation.h" />
-    <ClInclude Include="src\StaticVariables.h" />
-    <ClInclude Include="src\Time.h" />
-    <ClInclude Include="src\Starchaser.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Restable.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\CellObject.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Component.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\ComponentRegistry.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Player.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\GameObject.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Path.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Cell.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Node.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\InputManager.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Grid.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Simulation.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\StaticVariables.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Time.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\Starchaser.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

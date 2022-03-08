@@ -1,8 +1,10 @@
 #include <SFML\Graphics.hpp>
-#include "Simulation.h"
-#include "InputManager.h"
-#include "Time.h"
-#include "StaticVariables.h"
+#include "WhenYouWishUponAStar/Simulation.h"
+#include "WhenYouWishUponAStar/InputManager.h"
+#include "WhenYouWishUponAStar/Time.h"
+#include "WhenYouWishUponAStar/StaticVariables.h"
+
+using namespace WhenYouWishUponAStar;
 
 int main() {
     sf::VideoMode videoMode;

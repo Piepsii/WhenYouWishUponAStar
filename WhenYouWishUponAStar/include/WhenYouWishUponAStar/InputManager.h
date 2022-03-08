@@ -1,0 +1,21 @@
+#pragma once
+#include "SFML/Window/Event.hpp"
+
+namespace WhenYouWishUponAStar {
+
+	class InputManager
+	{
+	public:
+		InputManager();
+
+		void setKey(sf::Keyboard::Key _key, bool _pressed);
+		void update();
+		bool isKeyDown(sf::Keyboard::Key _key);
+		bool isKeyPressed(sf::Keyboard::Key _key);
+		bool isKeyReleased(sf::Keyboard::Key _key);
+
+	private:
+		bool keys[sf::Keyboard::KeyCount];
+		bool previousKeys[sf::Keyboard::KeyCount];
+	};
+}
