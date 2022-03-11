@@ -159,9 +159,9 @@
     <ClCompile Include="src\Component.cpp" />
     <ClCompile Include="src\Player.cpp" />
     <ClCompile Include="src\GameObject.cpp" />
-    <ClCompile Include="src\Path.cpp" />
+    <ClCompile Include="src\AStarPath.cpp" />
     <ClCompile Include="src\Cell.cpp" />
-    <ClCompile Include="src\Node.cpp" />
+    <ClCompile Include="src\AStarNode.cpp" />
     <ClCompile Include="src\InputManager.cpp" />
     <ClCompile Include="src\Grid.cpp" />
     <ClCompile Include="src\Simulation.cpp" />
@@ -181,9 +181,9 @@
     <ClInclude Include="include\WhenYouWishUponAStar\ComponentRegistry.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\Player.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\GameObject.h" />
-    <ClInclude Include="include\WhenYouWishUponAStar\Path.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\AStarPath.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\Cell.h" />
-    <ClInclude Include="include\WhenYouWishUponAStar\Node.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\AStarNode.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\InputManager.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\Grid.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\Simulation.h" />

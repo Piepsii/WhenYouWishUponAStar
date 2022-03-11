@@ -53,7 +53,9 @@ namespace WhenYouWishUponAStar {
 			cellObject = starchaser.addComponent<CellObject>();
 			cellObject->spawn(*grid.get());
 			cellObject->setTexture(texture_starchaser);
-			auto path = starchaser.addComponent<Path>();
+			auto path = starchaser.addComponent<AStarPath>();
+			path->setupPath(*grid, 0, 0, 5, 5);
+			path->find();
 			auto starchaserComponent = starchaser.addComponent<Starchaser>();
 
 			cellObject = fallenStar.addComponent<CellObject>();

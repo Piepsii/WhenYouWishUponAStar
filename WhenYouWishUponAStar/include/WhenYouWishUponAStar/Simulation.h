@@ -5,7 +5,7 @@
 #include <time.h>
 
 #include "WhenYouWishUponAStar/Grid.h"
-#include "WhenYouWishUponAStar/Path.h"
+#include "WhenYouWishUponAStar/AStarPath.h"
 #include "WhenYouWishUponAStar/Player.h"
 #include "WhenYouWishUponAStar/InputManager.h"
 

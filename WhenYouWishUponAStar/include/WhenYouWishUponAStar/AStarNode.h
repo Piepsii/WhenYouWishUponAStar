@@ -9,10 +9,10 @@ namespace WhenYouWishUponAStar {
 
 	class Cell;
 
-	class Node : public GameObject
+	class AStarNode : public GameObject
 	{
 	public:
-		Node(Cell& _cell);
+		AStarNode(Cell& _cell);
 		void update(float _deltaTime);
 		void draw(sf::RenderWindow& _window);
 		void setColor(sf::Color _color);
@@ -23,7 +23,7 @@ namespace WhenYouWishUponAStar {
 		int f = INT_MAX;
 		int g = 0;
 		int h = INT_MAX;
-		Node* parent;
+		AStarNode* parent;
 
 	private:
 		Cell* cell;

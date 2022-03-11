@@ -37,7 +37,7 @@ namespace WhenYouWishUponAStar {
 	{
 		switch (state) {
 		case StarchaserState::Searching:
-			// set Node* to possible targets
+			// set AStarNode* to possible targets
 			
 			// animate path find
 			break;

@@ -20,11 +20,9 @@ namespace WhenYouWishUponAStar {
 						  y * shape.getLocalBounds().HEIGHT + outlineThickness);
 		shape.setOutlineColor(outlineColor);
 
-		if (rand() % 100 < 20) {
+		if (rand() % 100 < blockChance) {
 			isBlocked = true;
 		}
-
-		node = std::make_unique<Node>(*this);
 	}
 
 	void Cell::update(float _deltaTime)
@@ -53,12 +51,5 @@ namespace WhenYouWishUponAStar {
 			return;
 
 		_window.draw(shape);
-		if (node)
-			node->draw(_window);
-	}
-
-	Node* Cell::getNode()
-	{
-		return node.get();
 	}
 }

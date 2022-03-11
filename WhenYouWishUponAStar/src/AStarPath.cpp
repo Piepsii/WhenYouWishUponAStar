@@ -1,47 +1,47 @@
-#include "WhenYouWishUponAStar/Path.h"
+#include "WhenYouWishUponAStar/AStarPath.h"
 
 namespace WhenYouWishUponAStar {
 
-	Path::Path(GameObject* _parent, const ComponentFamilyId _id)
+	AStarPath::AStarPath(GameObject* _parent, const ComponentFamilyId _id)
 		: ComponentBase(_parent, _id)
 	{
 
 	}
 
-	Path::~Path()
+	AStarPath::~AStarPath()
 	{
 
 	}
 
-	void Path::setupPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY)
+	void AStarPath::setupPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY)
 	{
 		grid = &_grid;
 
 		Cell* startCell = grid->getCell(_sX, _sY);
 		if (startCell->isBlocked)
 			startCell = grid->getRandomCell();
-		start = startCell->getNode();
+		start = createNode(*startCell);
 		start->setColor(sf::Color::Blue);
 
 		Cell* targetCell = grid->getCell(_tX, _tY);
 		if (targetCell->isBlocked)
 			targetCell = grid->getRandomCell();
-		target = targetCell->getNode();
+		target = createNode(*targetCell);
 		target->setColor(sf::Color::Blue);
 
 		current = nullptr;
 	}
 
-	Node* Path::find()
+	AStarNode* AStarPath::find()
 	{
 		open.push_back(start);
 		current = start;
 		std::vector<Cell*> neighborCells = grid->getAllNeighbors(current->x,
 																 current->y);
-		std::vector<Node*> neighbors;
+		std::vector<AStarNode*> neighbors;
 		for (int i = 0; i < neighborCells.size(); i++) {
 			if (!neighborCells[i]->isBlocked)
-				neighbors.push_back(neighborCells[i]->getNode());
+				neighbors.push_back(createNode(*neighborCells[i]));
 		}
 		for (int i = 0; i < neighbors.size(); i++) {
 			neighbors[i]->parent = current;
@@ -85,10 +85,10 @@ namespace WhenYouWishUponAStar {
 			closed.push_back(current);
 			std::vector<Cell*> neighborCells = grid->getAllNeighbors(current->x,
 																	 current->y);
-			std::vector<Node*> neighbors;
+			std::vector<AStarNode*> neighbors;
 			for (int i = 0; i < neighborCells.size(); i++) {
 				if (!neighborCells[i]->isBlocked)
-					neighbors.push_back(neighborCells[i]->getNode());
+					neighbors.push_back(createNode(*neighborCells[i]));
 			}
 			for (int i = 0; i < neighbors.size(); i++) {
 				if (isNodeInList(neighbors[i], closed)) {
@@ -120,7 +120,7 @@ namespace WhenYouWishUponAStar {
 
 	}
 
-	bool Path::isNodeInList(Node* _node, std::vector<Node*> _list)
+	bool AStarPath::isNodeInList(AStarNode* _node, std::vector<AStarNode*> _list)
 	{
 		for (int i = 0; i < _list.size(); i++) {
 			if (_list[i] == _node)
@@ -129,7 +129,13 @@ namespace WhenYouWishUponAStar {
 		return false;
 	}
 
-	int Path::manhattan(int _x, int _y)
+	AStarNode* AStarPath::createNode(Cell& _cell)
+	{
+		nodes.push_back(std::make_unique<AStarNode>(_cell));
+		return nodes.back().get();
+	}
+
+	int AStarPath::manhattan(int _x, int _y)
 	{
 		return abs(target->x - _x + target->y - _y) * 10;
 	}

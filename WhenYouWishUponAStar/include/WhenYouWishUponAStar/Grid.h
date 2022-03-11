@@ -5,7 +5,7 @@
 #include <SFML/Graphics.hpp>
 
 #include "WhenYouWishUponAStar/GameObject.h"
-#include "WhenYouWishUponAStar/Node.h"
+#include "WhenYouWishUponAStar/AStarNode.h"
 #include "WhenYouWishUponAStar/Cell.h"
 #include "WhenYouWishUponAStar/StaticVariables.h"
 

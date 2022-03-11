@@ -3,7 +3,7 @@
 
 namespace WhenYouWishUponAStar {
 
-    class Node;
+    class AStarNode;
 
     enum class StarchaserState {
         Searching,
@@ -31,9 +31,9 @@ namespace WhenYouWishUponAStar {
         float sellSpeed = 1.0f;
 
         StarchaserState state = StarchaserState::Searching;
-        Node* target;
-        Node* fallenStar;
-        Node* spaceship;
-        Node* tradingPost;
+        AStarNode* target;
+        AStarNode* fallenStar;
+        AStarNode* spaceship;
+        AStarNode* tradingPost;
     };
 }

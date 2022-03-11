@@ -1,7 +1,7 @@
 #pragma once
 
 #include "WhenYouWishUponAStar/GameObject.h"
-#include "WhenYouWishUponAStar/Node.h"
+#include "WhenYouWishUponAStar/AStarNode.h"
 
 namespace WhenYouWishUponAStar {
 	class Cell : public GameObject
@@ -11,7 +11,6 @@ namespace WhenYouWishUponAStar {
 			 int _y = 0);
 		void update(float _deltaTime);
 		void draw(sf::RenderWindow& _window);
-		Node* getNode();
 
 		bool isBlocked = false;
 		bool isSelected = false;
@@ -21,13 +20,13 @@ namespace WhenYouWishUponAStar {
 		float height = 0.0f;
 
 	private:
+		int blockChance = 40;
 		float outlineThickness = 3.0f;
-		std::unique_ptr<Node> node;
 		sf::RectangleShape shape;
 		sf::Color normalColor = sf::Color::Black;
-		sf::Color blockedColor = sf::Color::Black;
+		sf::Color blockedColor = sf::Color::White;
 		sf::Color outlineColor = sf::Color::White;
-		sf::Color selectedColor = sf::Color::Yellow;
+		sf::Color selectedColor = sf::Color::Blue;
 
 	};
 }

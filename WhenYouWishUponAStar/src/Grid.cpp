@@ -120,14 +120,22 @@ namespace WhenYouWishUponAStar {
 		result.push_back(getCell(_x + 1, _y));
 		result.push_back(getCell(_x, _y + 1));
 
-		if (!result[0]->isBlocked && !result[1]->isBlocked)
-			result.push_back(getCell(_x - 1, _y - 1));
-		if (!result[1]->isBlocked && !result[2]->isBlocked)
-			result.push_back(getCell(_x + 1, _y - 1));
-		if (!result[2]->isBlocked && !result[3]->isBlocked)
-			result.push_back(getCell(_x - 1, _y + 1));
-		if (!result[3]->isBlocked && !result[0]->isBlocked)
-			result.push_back(getCell(_x + 1, _y + 1));
+		if (result[0] != nullptr && result[1] != nullptr) {
+			if (!result[0]->isBlocked && !result[1]->isBlocked)
+				result.push_back(getCell(_x - 1, _y - 1));
+		}
+		if (result[1] != nullptr && result[2] != nullptr) {
+			if (!result[1]->isBlocked && !result[2]->isBlocked)
+				result.push_back(getCell(_x + 1, _y - 1));
+		}
+		if (result[2] != nullptr && result[3] != nullptr) {
+			if (!result[2]->isBlocked && !result[3]->isBlocked)
+				result.push_back(getCell(_x - 1, _y + 1));
+		}
+		if (result[3] != nullptr && result[0] != nullptr) {
+			if (!result[3]->isBlocked && !result[0]->isBlocked)
+				result.push_back(getCell(_x + 1, _y + 1));
+		}
 
 		std::vector<int> indeces;
 		for (int i = 0; i < result.size(); i++) {
