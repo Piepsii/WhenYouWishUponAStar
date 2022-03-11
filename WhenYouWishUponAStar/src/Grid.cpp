@@ -115,15 +115,19 @@ namespace WhenYouWishUponAStar {
 	std::vector<Cell*> Grid::getAllNeighbors(int _x, int _y)
 	{
 		std::vector<Cell*> result;
-		result.push_back(getCell(_x - 1, _y - 1));
-		result.push_back(getCell(_x, _y - 1));
-		result.push_back(getCell(_x + 1, _y - 1));
 		result.push_back(getCell(_x - 1, _y));
-
+		result.push_back(getCell(_x, _y - 1));
 		result.push_back(getCell(_x + 1, _y));
-		result.push_back(getCell(_x - 1, _y + 1));
 		result.push_back(getCell(_x, _y + 1));
-		result.push_back(getCell(_x + 1, _y + 1));
+
+		if (!result[0]->isBlocked && !result[1]->isBlocked)
+			result.push_back(getCell(_x - 1, _y - 1));
+		if (!result[1]->isBlocked && !result[2]->isBlocked)
+			result.push_back(getCell(_x + 1, _y - 1));
+		if (!result[2]->isBlocked && !result[3]->isBlocked)
+			result.push_back(getCell(_x - 1, _y + 1));
+		if (!result[3]->isBlocked && !result[0]->isBlocked)
+			result.push_back(getCell(_x + 1, _y + 1));
 
 		std::vector<int> indeces;
 		for (int i = 0; i < result.size(); i++) {

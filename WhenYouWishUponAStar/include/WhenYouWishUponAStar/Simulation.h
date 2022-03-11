@@ -37,5 +37,10 @@ namespace WhenYouWishUponAStar {
 		GameObject tradingPost;
 		GameObject fallenStar;
 		GameObject starchaser;
+
+		sf::Texture texture_spaceship;
+		sf::Texture texture_tradingPost;
+		sf::Texture texture_fallenStar;
+		sf::Texture texture_starchaser;
 	};
 }

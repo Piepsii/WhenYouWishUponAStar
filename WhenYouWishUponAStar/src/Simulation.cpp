@@ -33,19 +33,36 @@ namespace WhenYouWishUponAStar {
 		if (!hasStarted) {
 			hasStarted = true;
 
+			if (!texture_spaceship.loadFromFile("assets/spaceship.png"))
+				return -1;
+			if (!texture_tradingPost.loadFromFile("assets/trading_post.png"))
+				return -1;
+			if (!texture_fallenStar.loadFromFile("assets/fallen_star.png"))
+				return -1;
+			if (!texture_starchaser.loadFromFile("assets/starchaser.png"))
+				return -1;
+
 			player->grid = grid.get();
 
 			auto cellObject = spaceship.addComponent<CellObject>();
-			cellObject->grid = grid.get();
-			cellObject->spawn();
+			cellObject->spawn(*grid.get());
+			cellObject->setTexture(texture_spaceship);
 			auto restable = spaceship.addComponent<Restable>();
 			restable->start();
 
 			cellObject = starchaser.addComponent<CellObject>();
-			cellObject->grid = grid.get();
-			cellObject->spawn();
+			cellObject->spawn(*grid.get());
+			cellObject->setTexture(texture_starchaser);
 			auto path = starchaser.addComponent<Path>();
 			auto starchaserComponent = starchaser.addComponent<Starchaser>();
+
+			cellObject = fallenStar.addComponent<CellObject>();
+			cellObject->spawn(*grid.get());
+			cellObject->setTexture(texture_fallenStar);
+
+			cellObject = tradingPost.addComponent<CellObject>();
+			cellObject->spawn(*grid.get());
+			cellObject->setTexture(texture_tradingPost);
 		}
 		grid->update(_deltaTime);
 		player->update(_deltaTime);

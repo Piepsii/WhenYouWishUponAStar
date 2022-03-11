@@ -14,9 +14,11 @@ namespace WhenYouWishUponAStar {
 		CellObject(GameObject* _parent, const ComponentFamilyId _id);
 		~CellObject();
 
-		void spawn();
-		void spawn(int _x, int _y);
+		void spawn(Grid& _grid);
+		void spawn(Grid& _grid, int _x, int _y);
 		void update(float _deltaTime);
+		void draw(sf::RenderWindow& _window);
+		void setTexture(sf::Texture& _texture);
 
 		int x = 0;
 		int y = 0;
@@ -24,7 +26,7 @@ namespace WhenYouWishUponAStar {
 		Grid* grid = nullptr;
 
 	private:
-
+		sf::Sprite sprite;
 	};
 
 }

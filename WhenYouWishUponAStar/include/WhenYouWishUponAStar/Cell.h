@@ -24,9 +24,9 @@ namespace WhenYouWishUponAStar {
 		float outlineThickness = 3.0f;
 		std::unique_ptr<Node> node;
 		sf::RectangleShape shape;
-		sf::Color normalColor = sf::Color::White;
+		sf::Color normalColor = sf::Color::Black;
 		sf::Color blockedColor = sf::Color::Black;
-		sf::Color outlineColor = sf::Color::Black;
+		sf::Color outlineColor = sf::Color::White;
 		sf::Color selectedColor = sf::Color::Yellow;
 
 	};
