@@ -44,36 +44,34 @@ namespace WhenYouWishUponAStar {
 
 			player->grid = grid.get();
 
-			auto cellObject = spaceship.addComponent<CellObject>();
-			cellObject->spawn(*grid.get());
-			cellObject->setTexture(texture_spaceship);
+			auto spaceshipObject = spaceship.addComponent<CellObject>();
+			spaceshipObject->spawn(*grid.get());
+			spaceshipObject->setTexture(texture_spaceship);
 			auto restable = spaceship.addComponent<Restable>();
 			restable->start();
 
-			cellObject = starchaser.addComponent<CellObject>();
-			cellObject->spawn(*grid.get());
-			cellObject->setTexture(texture_starchaser);
+			auto fallenStarObject = fallenStar.addComponent<CellObject>();
+			fallenStarObject->spawn(*grid.get());
+			fallenStarObject->setTexture(texture_fallenStar);
+
+			auto tradingPostObject = tradingPost.addComponent<CellObject>();
+			tradingPostObject->spawn(*grid.get());
+			tradingPostObject->setTexture(texture_tradingPost);
+
+			auto starchaserObject = starchaser.addComponent<CellObject>();
+			starchaserObject->spawn(*grid.get());
+			starchaserObject->setTexture(texture_starchaser);
 			auto path = starchaser.addComponent<AStarPath>();
 			path->setGrid(*grid);
-			path->find(0, 0, 5, 5);
 			auto starchaserComponent = starchaser.addComponent<Starchaser>();
-
-			cellObject = fallenStar.addComponent<CellObject>();
-			cellObject->spawn(*grid.get());
-			cellObject->setTexture(texture_fallenStar);
-
-			cellObject = tradingPost.addComponent<CellObject>();
-			cellObject->spawn(*grid.get());
-			cellObject->setTexture(texture_tradingPost);
+			starchaserComponent->sense(*starchaserObject,
+									   *fallenStarObject,
+									   *spaceshipObject,
+									   *tradingPostObject,
+									   *path);
 		}
 		grid->update(_deltaTime);
 		player->update(_deltaTime);
-		if (player->hasUpdatedGrid) {
-			player->hasUpdatedGrid = false;
-			auto path = starchaser.getComponent<AStarPath>();
-			path->forget();
-			path->find(0, 0, 5, 5);
-		}
 		input->update();
 		spaceship.update(_deltaTime);
 		starchaser.update(_deltaTime);

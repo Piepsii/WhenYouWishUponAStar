@@ -26,6 +26,7 @@ namespace WhenYouWishUponAStar {
 
 	AStarNode* AStarPath::find(int _sX, int _sY, int _tX, int _tY)
 	{
+		clear();
 		Cell* startCell = grid->getCell(_sX, _sY);
 		if (startCell->isBlocked)
 			startCell = grid->getRandomCell();
@@ -104,7 +105,7 @@ namespace WhenYouWishUponAStar {
 
 	}
 
-	void AStarPath::forget()
+	void AStarPath::clear()
 	{
 		found = false;
 		start = nullptr;

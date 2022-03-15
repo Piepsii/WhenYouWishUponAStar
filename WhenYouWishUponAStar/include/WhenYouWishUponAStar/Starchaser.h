@@ -1,9 +1,11 @@
 #pragma once
 #include "WhenYouWishUponAStar/Component.h"
+#include "WhenYouWishUponAStar/CellObject.h"
+#include "WhenYouWishUponAStar/AStarPath.h"
 
 namespace WhenYouWishUponAStar {
 
-    class AStarNode;
+    class Cell;
 
     enum class StarchaserState {
         Searching,
@@ -19,8 +21,13 @@ namespace WhenYouWishUponAStar {
         Starchaser(GameObject* _parent, const ComponentFamilyId _id);
         ~Starchaser();
 
-        void start();
+        void sense(CellObject& _starchaser,
+                   CellObject& _fallenStar,
+                   CellObject& _spaceship,
+                   CellObject& _tradingPost,
+                   AStarPath& _path);
         void decide();
+        void act();
         void update(float _deltaTime);
 
     private:
@@ -31,9 +38,11 @@ namespace WhenYouWishUponAStar {
         float sellSpeed = 1.0f;
 
         StarchaserState state = StarchaserState::Searching;
-        AStarNode* target;
-        AStarNode* fallenStar;
-        AStarNode* spaceship;
-        AStarNode* tradingPost;
+        Cell* target;
+        CellObject* starchaser;
+        CellObject* fallenStar;
+        CellObject* spaceship;
+        CellObject* tradingPost;
+        AStarPath* path;
     };
 }

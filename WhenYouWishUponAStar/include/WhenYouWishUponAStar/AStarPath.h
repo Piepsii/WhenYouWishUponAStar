@@ -17,12 +17,12 @@ namespace WhenYouWishUponAStar {
 		void draw(sf::RenderWindow& _window);
 		void setGrid(Grid& _grid);
 		AStarNode* find(int _sX, int _sY, int _tX, int _tY);
-		void forget();
 
 		bool found = false;
 
 	private:
 		int manhattan(int _x, int _y);
+		void clear();
 		bool isNodeInList(AStarNode* _node, std::vector<AStarNode*> _list);
 		bool nodeExistsAtPosition(int _x, int _y);
 		AStarNode* createNode(Cell& _cell);

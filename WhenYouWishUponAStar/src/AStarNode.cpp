@@ -10,7 +10,7 @@ namespace WhenYouWishUponAStar {
 		cell = &_cell;
 		x = cell->x;
 		y = cell->y;
-		float radius = cell->width / 3;
+		float radius = cell->width / 6;
 		shape = sf::CircleShape(radius);
 		shape.setFillColor(sf::Color::White);
 		drawPosition.x = cell->x * cell->width + cell->width / 2;
@@ -57,8 +57,8 @@ namespace WhenYouWishUponAStar {
 		sf::Vector2f length = _end->drawPosition - _start->drawPosition;
 		float magnitude = sqrtf(length.x * length.x + length.y * length.y);
 		sf::Vector2f size = sf::Vector2f(magnitude, lineThickness);
-		float angle = length.x / sqrtf(length.x * length.x + length.y * length.y);
-		float angleInDegree = angle * 180.0f / 3.14159265358979323846f - 90.0f;
+		float angle = atan2(length.y, length.x);
+		float angleInDegree = angle * 180.0f / 3.14159265358979323846f;
 
 		sf::RectangleShape edge = sf::RectangleShape(size);
 		edge.setOrigin(0.0f, lineThickness / 2.0f);
