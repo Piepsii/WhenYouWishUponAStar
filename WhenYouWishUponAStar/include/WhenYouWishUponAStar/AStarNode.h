@@ -24,12 +24,12 @@ namespace WhenYouWishUponAStar {
 		int f = INT_MAX;
 		int g = 0;
 		int h = INT_MAX;
+		Cell* cell;
 		AStarNode* parent;
 		sf::Vector2f drawPosition;
 
 	private:
 		float lineThickness = 6.0f;
-		Cell* cell;
 		std::vector<sf::RectangleShape> edges;
 		sf::CircleShape shape;
 	};

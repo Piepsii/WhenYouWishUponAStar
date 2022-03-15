@@ -26,30 +26,41 @@ namespace WhenYouWishUponAStar {
 
 	void Starchaser::decide()
 	{
-		if (stamina <= 0) {
-			target = spaceship->cell;
-			return;
-		}
+		if (path->isFound) {
+			state = StarchaserState::Moving;
 
-		if(!hasFallenStar) {
-			target = fallenStar->cell;
-			return;
-		}
+		} 
+		else {
+			state = StarchaserState::Searching;
+			if (stamina <= 0) {
+				target = spaceship->cell;
+				return;
+			}
 
-		if (hasFallenStar) {
-			target = tradingPost->cell;
-			return;
+			if (!hasFallenStar) {
+				target = fallenStar->cell;
+				return;
+			}
+
+			if (hasFallenStar) {
+				target = tradingPost->cell;
+				return;
+			}
 		}
 	}
 
-	void Starchaser::act()
+	void Starchaser::act(float _deltaTime)
 	{
 		switch (state) {
 		case StarchaserState::Searching:
 			path->find(starchaser->x, starchaser->y, target->x, target->y);
 			break;
 		case StarchaserState::Moving:
-			// move towards target
+			moveCounter += _deltaTime;
+			if (moveCounter >= moveSpeed) {
+				starchaser->moveTo(*path->nextCell(*starchaser->cell));
+				moveCounter = 0.0f;
+			}
 			if (hasFallenStar)
 				stamina--;
 			break;
@@ -65,6 +76,6 @@ namespace WhenYouWishUponAStar {
 	void Starchaser::update(float _deltaTime)
 	{
 		decide();
-		act();
+		act(_deltaTime);
 	}
 }

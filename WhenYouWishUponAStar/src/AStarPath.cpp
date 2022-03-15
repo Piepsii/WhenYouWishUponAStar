@@ -60,7 +60,7 @@ namespace WhenYouWishUponAStar {
 			open.erase(open.begin() + lowestIndex);
 			if (current == target) {
 				target->drawPath();
-				found = true;
+				isFound = true;
 				return target;
 			}
 
@@ -105,9 +105,22 @@ namespace WhenYouWishUponAStar {
 
 	}
 
+	Cell* AStarPath::nextCell(Cell& _currentCell)
+	{
+		AStarNode* iterator = target;
+		if (iterator->parent == nullptr)
+			return nullptr;
+		while (iterator->parent->cell != &_currentCell) {
+			iterator = iterator->parent;
+			if (iterator->parent == nullptr)
+				return nullptr;
+		}
+		return iterator->cell;
+	}
+
 	void AStarPath::clear()
 	{
-		found = false;
+		isFound = false;
 		start = nullptr;
 		target = nullptr;
 		current = nullptr;

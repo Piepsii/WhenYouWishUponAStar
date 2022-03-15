@@ -72,6 +72,11 @@ namespace WhenYouWishUponAStar {
 		}
 		grid->update(_deltaTime);
 		player->update(_deltaTime);
+		if (player->hasUpdatedGrid) {
+			player->hasUpdatedGrid = false;
+			auto path = starchaser.getComponent<AStarPath>();
+			path->isFound = false;
+		}
 		input->update();
 		spaceship.update(_deltaTime);
 		starchaser.update(_deltaTime);

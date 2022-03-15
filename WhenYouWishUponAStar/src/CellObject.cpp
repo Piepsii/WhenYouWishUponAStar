@@ -40,4 +40,11 @@ namespace WhenYouWishUponAStar {
 		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
 		sprite.setScale(cell->width / _texture.getSize().x, cell->height / _texture.getSize().y);
 	}
+	void CellObject::moveTo(Cell& _cell)
+	{
+		if (&_cell == nullptr)
+			return;
+		cell = &_cell;
+		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
+	}
 }

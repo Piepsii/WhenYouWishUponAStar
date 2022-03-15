@@ -19,6 +19,7 @@ namespace WhenYouWishUponAStar {
 		void update(float _deltaTime);
 		void draw(sf::RenderWindow& _window);
 		void setTexture(sf::Texture& _texture);
+		void moveTo(Cell& _cell);
 
 		int x = 0;
 		int y = 0;

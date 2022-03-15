@@ -27,13 +27,13 @@ namespace WhenYouWishUponAStar {
                    CellObject& _tradingPost,
                    AStarPath& _path);
         void decide();
-        void act();
+        void act(float _deltaTime);
         void update(float _deltaTime);
 
     private:
         bool hasFallenStar = false;
         int stamina = 5;
-        float moveSpeed = 1.0f;
+        float moveSpeed = 1.0f, moveCounter = 0.0f;
         float restSpeed = 1.0f;
         float sellSpeed = 1.0f;
 
