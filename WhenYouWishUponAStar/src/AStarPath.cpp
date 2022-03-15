@@ -108,6 +108,8 @@ namespace WhenYouWishUponAStar {
 	Cell* AStarPath::nextCell(Cell& _currentCell)
 	{
 		AStarNode* iterator = target;
+		if (iterator->cell == &_currentCell)
+			return iterator->cell;
 		if (iterator->parent == nullptr)
 			return nullptr;
 		while (iterator->parent->cell != &_currentCell) {

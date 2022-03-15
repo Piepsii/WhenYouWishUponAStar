@@ -17,6 +17,7 @@ namespace WhenYouWishUponAStar {
 		cell = grid->getRandomCell();
 		x = cell->x;
 		y = cell->y;
+		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
 	}
 
 	void CellObject::spawn(Grid& _grid, int _x, int _y)
@@ -25,10 +26,21 @@ namespace WhenYouWishUponAStar {
 		x = _x;
 		y = _y;
 		cell = grid->getCell(x, y);
+		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
+	}
+
+	void CellObject::respawn()
+	{
+		cell = grid->getRandomCell();
+		x = cell->x;
+		y = cell->y;
+		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
 	}
 
 	void CellObject::update(float _deltaTime)
 	{
+		x = cell->x;
+		y = cell->y;
 	}
 	void CellObject::draw(sf::RenderWindow& _window)
 	{
@@ -46,5 +58,9 @@ namespace WhenYouWishUponAStar {
 			return;
 		cell = &_cell;
 		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
+	}
+	void CellObject::setRotation(float _angle)
+	{
+		sprite.setRotation(_angle);
 	}
 }

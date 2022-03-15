@@ -26,27 +26,54 @@ namespace WhenYouWishUponAStar {
 
 	void Starchaser::decide()
 	{
+		if (starchaser->cell == fallenStar->cell
+			&& target == fallenStar->cell) {
+			hasFallenStar = true;
+			path->isFound = false;
+		}
+
+		if (starchaser->cell == tradingPost->cell
+			&& target == tradingPost->cell
+			&& hasFallenStar) {
+			state = StarchaserState::Selling;
+			path->isFound = false;
+			return;
+		}
+
+		if (starchaser->cell == spaceship->cell
+			&& target == spaceship->cell
+			&& stamina < maxStamina) {
+			state = StarchaserState::Resting;
+			path->isFound = false;
+			return;
+		}
+
+		if (stamina <= 0
+			&& hasFallenStar) {
+			target = spaceship->cell;
+			hasFallenStar = false;
+			state = StarchaserState::Searching;
+			return;
+		}
+
 		if (path->isFound) {
 			state = StarchaserState::Moving;
-
+			return;
 		} 
-		else {
+
+
+		if (!hasFallenStar) {
+			target = fallenStar->cell;
 			state = StarchaserState::Searching;
-			if (stamina <= 0) {
-				target = spaceship->cell;
-				return;
-			}
-
-			if (!hasFallenStar) {
-				target = fallenStar->cell;
-				return;
-			}
-
-			if (hasFallenStar) {
-				target = tradingPost->cell;
-				return;
-			}
+			return;
 		}
+
+		if (hasFallenStar) {
+			target = tradingPost->cell;
+			state = StarchaserState::Searching;
+			return;
+		}
+
 	}
 
 	void Starchaser::act(float _deltaTime)
@@ -58,17 +85,25 @@ namespace WhenYouWishUponAStar {
 		case StarchaserState::Moving:
 			moveCounter += _deltaTime;
 			if (moveCounter >= moveSpeed) {
-				starchaser->moveTo(*path->nextCell(*starchaser->cell));
 				moveCounter = 0.0f;
+				starchaser->moveTo(*path->nextCell(*starchaser->cell));
+				if (hasFallenStar) {
+					fallenStar->moveTo(*path->nextCell(*starchaser->cell));
+					stamina--;
+				}
 			}
-			if (hasFallenStar)
-				stamina--;
 			break;
 		case StarchaserState::Selling:
 			hasFallenStar = false;
+			fallenStar->respawn();
 			break;
 		case StarchaserState::Resting:
-			stamina++;
+			restCounter += _deltaTime;
+			starchaser->setRotation(restCounter / restSpeed * 360.0f);
+			if (restCounter >= restSpeed) {
+				restCounter = 0.0f;
+				stamina++;
+			}
 			break;
 		}
 	}

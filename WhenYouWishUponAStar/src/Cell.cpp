@@ -31,13 +31,16 @@ namespace WhenYouWishUponAStar {
 			return;
 
 		if (isSelected) {
-			shape.setOutlineColor(selectedColor);
+			shape.setOutlineColor(selectedOutlineColor);
 		}
 		else {
 			shape.setOutlineColor(outlineColor);
 		}
 
-		if (isBlocked) {
+		if (isSelected) {
+			shape.setFillColor(selectedColor);
+		}
+		else if (isBlocked) {
 			shape.setFillColor(blockedColor);
 		}
 		else {

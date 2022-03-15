@@ -25,8 +25,9 @@ namespace WhenYouWishUponAStar {
 		sf::RectangleShape shape;
 		sf::Color normalColor = sf::Color::Black;
 		sf::Color blockedColor = sf::Color::White;
+		sf::Color selectedColor = sf::Color(128, 128, 128, 128);
 		sf::Color outlineColor = sf::Color::White;
-		sf::Color selectedColor = sf::Color::Blue;
+		sf::Color selectedOutlineColor = sf::Color::Yellow;
 
 	};
 }
