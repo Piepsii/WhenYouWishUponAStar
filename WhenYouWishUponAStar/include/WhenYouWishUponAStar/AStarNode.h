@@ -17,6 +17,7 @@ namespace WhenYouWishUponAStar {
 		void draw(sf::RenderWindow& _window);
 		void setColor(sf::Color _color);
 		void drawPath();
+		void addEdge(AStarNode* _start, AStarNode* _end);
 
 		int x;
 		int y;
@@ -24,8 +25,10 @@ namespace WhenYouWishUponAStar {
 		int g = 0;
 		int h = INT_MAX;
 		AStarNode* parent;
+		sf::Vector2f drawPosition;
 
 	private:
+		float lineThickness = 6.0f;
 		Cell* cell;
 		std::vector<sf::RectangleShape> edges;
 		sf::CircleShape shape;

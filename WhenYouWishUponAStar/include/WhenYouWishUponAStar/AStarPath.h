@@ -14,13 +14,17 @@ namespace WhenYouWishUponAStar {
 		AStarPath(GameObject* _parent, const ComponentFamilyId _id);
 		~AStarPath();
 
-		void setupPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY);
-		AStarNode* find();
+		void draw(sf::RenderWindow& _window);
+		void setGrid(Grid& _grid);
+		AStarNode* find(int _sX, int _sY, int _tX, int _tY);
+		void forget();
 
+		bool found = false;
 
 	private:
 		int manhattan(int _x, int _y);
 		bool isNodeInList(AStarNode* _node, std::vector<AStarNode*> _list);
+		bool nodeExistsAtPosition(int _x, int _y);
 		AStarNode* createNode(Cell& _cell);
 
 		AStarNode* start;

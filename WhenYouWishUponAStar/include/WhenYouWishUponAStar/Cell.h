@@ -20,7 +20,7 @@ namespace WhenYouWishUponAStar {
 		float height = 0.0f;
 
 	private:
-		int blockChance = 40;
+		int blockChance = 20;
 		float outlineThickness = 3.0f;
 		sf::RectangleShape shape;
 		sf::Color normalColor = sf::Color::Black;

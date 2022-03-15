@@ -13,8 +13,9 @@ namespace WhenYouWishUponAStar {
 		float radius = cell->width / 3;
 		shape = sf::CircleShape(radius);
 		shape.setFillColor(sf::Color::White);
-		shape.setPosition(cell->x * cell->width + cell->width / 2,
-						  cell->y * cell->height + cell->height / 2);
+		drawPosition.x = cell->x * cell->width + cell->width / 2;
+		drawPosition.y = cell->y * cell->height + cell->height / 2;
+		shape.setPosition(drawPosition);
 		shape.setOrigin(radius,
 						radius);
 	}
@@ -32,6 +33,8 @@ namespace WhenYouWishUponAStar {
 			return;
 
 		_window.draw(shape);
+		for (auto& edge : edges)
+			_window.draw(edge);
 	}
 
 	void AStarNode::setColor(sf::Color _color)
@@ -43,7 +46,25 @@ namespace WhenYouWishUponAStar {
 	{
 		setColor(sf::Color::Green);
 		if (parent) {
+			addEdge(this, parent);
 			parent->drawPath();
 		}
+	}
+
+	void AStarNode::addEdge(AStarNode* _start, AStarNode* _end)
+	{
+		sf::Vector2f position = _start->drawPosition;
+		sf::Vector2f length = _end->drawPosition - _start->drawPosition;
+		float magnitude = sqrtf(length.x * length.x + length.y * length.y);
+		sf::Vector2f size = sf::Vector2f(magnitude, lineThickness);
+		float angle = length.x / sqrtf(length.x * length.x + length.y * length.y);
+		float angleInDegree = angle * 180.0f / 3.14159265358979323846f - 90.0f;
+
+		sf::RectangleShape edge = sf::RectangleShape(size);
+		edge.setOrigin(0.0f, lineThickness / 2.0f);
+		edge.setRotation(angleInDegree);
+		edge.setPosition(position);
+		edge.setFillColor(sf::Color::Green);
+		edges.push_back(edge);
 	}
 }

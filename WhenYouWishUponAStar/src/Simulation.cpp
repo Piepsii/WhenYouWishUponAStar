@@ -54,8 +54,8 @@ namespace WhenYouWishUponAStar {
 			cellObject->spawn(*grid.get());
 			cellObject->setTexture(texture_starchaser);
 			auto path = starchaser.addComponent<AStarPath>();
-			path->setupPath(*grid, 0, 0, 5, 5);
-			path->find();
+			path->setGrid(*grid);
+			path->find(0, 0, 5, 5);
 			auto starchaserComponent = starchaser.addComponent<Starchaser>();
 
 			cellObject = fallenStar.addComponent<CellObject>();
@@ -68,6 +68,12 @@ namespace WhenYouWishUponAStar {
 		}
 		grid->update(_deltaTime);
 		player->update(_deltaTime);
+		if (player->hasUpdatedGrid) {
+			player->hasUpdatedGrid = false;
+			auto path = starchaser.getComponent<AStarPath>();
+			path->forget();
+			path->find(0, 0, 5, 5);
+		}
 		input->update();
 		spaceship.update(_deltaTime);
 		starchaser.update(_deltaTime);

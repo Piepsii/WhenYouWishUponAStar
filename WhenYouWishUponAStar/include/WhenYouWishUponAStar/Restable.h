@@ -14,8 +14,5 @@ namespace WhenYouWishUponAStar {
         void start();
         void update(float _deltaTime);
         void draw(sf::RenderWindow& _window);
-
-    private:
-        sf::CircleShape shape;
     };
 }

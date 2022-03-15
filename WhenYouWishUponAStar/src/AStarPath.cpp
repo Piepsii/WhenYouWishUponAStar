@@ -13,62 +13,42 @@ namespace WhenYouWishUponAStar {
 
 	}
 
-	void AStarPath::setupPath(Grid& _grid, int _sX, int _sY, int _tX, int _tY)
+	void AStarPath::draw(sf::RenderWindow& _window)
+	{
+		for (auto& node : nodes)
+			node->draw(_window);
+	}
+
+	void AStarPath::setGrid(Grid& _grid)
 	{
 		grid = &_grid;
+	}
 
+	AStarNode* AStarPath::find(int _sX, int _sY, int _tX, int _tY)
+	{
 		Cell* startCell = grid->getCell(_sX, _sY);
 		if (startCell->isBlocked)
 			startCell = grid->getRandomCell();
-		start = createNode(*startCell);
-		start->setColor(sf::Color::Blue);
 
 		Cell* targetCell = grid->getCell(_tX, _tY);
 		if (targetCell->isBlocked)
 			targetCell = grid->getRandomCell();
+		start = createNode(*startCell);
+		start->setColor(sf::Color::Blue);
 		target = createNode(*targetCell);
 		target->setColor(sf::Color::Blue);
-
 		current = nullptr;
-	}
-
-	AStarNode* AStarPath::find()
-	{
 		open.push_back(start);
 		current = start;
-		std::vector<Cell*> neighborCells = grid->getAllNeighbors(current->x,
-																 current->y);
-		std::vector<AStarNode*> neighbors;
-		for (int i = 0; i < neighborCells.size(); i++) {
-			if (!neighborCells[i]->isBlocked)
-				neighbors.push_back(createNode(*neighborCells[i]));
-		}
-		for (int i = 0; i < neighbors.size(); i++) {
-			neighbors[i]->parent = current;
-			if (isNodeInList(neighbors[i], closed)) {
-				continue;
-			}
-			// g
-			int distanceX = neighbors[i]->x - current->x;
-			int distanceY = neighbors[i]->y - current->y;
-			float magnitude = sqrtf(abs(distanceX) + abs(distanceY));
-			if (magnitude > 1.4f) {
-				neighbors[i]->g = current->g + 14;
-			}
-			else {
-				neighbors[i]->g = current->g + 10;
-			}
-			// h
-			neighbors[i]->h = manhattan(neighbors[i]->x, neighbors[i]->y);
+		current->h = manhattan(current->x, current->y);
+		current->g = 0;
+		current->f = current->h + current->g;
 
-			// f
-			neighbors[i]->f = neighbors[i]->g + neighbors[i]->h;
-
-			open.push_back(neighbors[i]);
-		}
 		while (current->x != target->x || current->y != target->y) {
 			int lowest = INT_MAX;
 			int lowestIndex = -1;
+			if (open.size() == 0)
+				return nullptr;
 			for (int i = 0; i < open.size(); i++) {
 				if (open[i]->f < lowest) {
 					lowest = open[i]->f;
@@ -79,6 +59,7 @@ namespace WhenYouWishUponAStar {
 			open.erase(open.begin() + lowestIndex);
 			if (current == target) {
 				target->drawPath();
+				found = true;
 				return target;
 			}
 
@@ -87,8 +68,11 @@ namespace WhenYouWishUponAStar {
 																	 current->y);
 			std::vector<AStarNode*> neighbors;
 			for (int i = 0; i < neighborCells.size(); i++) {
-				if (!neighborCells[i]->isBlocked)
+				if (!neighborCells[i]->isBlocked && !nodeExistsAtPosition(neighborCells[i]->x, neighborCells[i]->y))
 					neighbors.push_back(createNode(*neighborCells[i]));
+				if (neighborCells[i]->x == target->x && neighborCells[i]->y == target->y) {
+					neighbors.push_back(target);
+				}
 			}
 			for (int i = 0; i < neighbors.size(); i++) {
 				if (isNodeInList(neighbors[i], closed)) {
@@ -120,10 +104,30 @@ namespace WhenYouWishUponAStar {
 
 	}
 
+	void AStarPath::forget()
+	{
+		found = false;
+		start = nullptr;
+		target = nullptr;
+		current = nullptr;
+		open.clear();
+		closed.clear();
+		nodes.clear();
+	}
+
 	bool AStarPath::isNodeInList(AStarNode* _node, std::vector<AStarNode*> _list)
 	{
 		for (int i = 0; i < _list.size(); i++) {
 			if (_list[i] == _node)
+				return true;
+		}
+		return false;
+	}
+
+	bool AStarPath::nodeExistsAtPosition(int _x, int _y)
+	{
+		for (auto& node : nodes) {
+			if (node->x == _x && node->y == _y)
 				return true;
 		}
 		return false;
