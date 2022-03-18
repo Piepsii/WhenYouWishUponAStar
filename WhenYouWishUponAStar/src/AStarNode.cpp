@@ -20,13 +20,6 @@ namespace WhenYouWishUponAStar {
 						radius);
 	}
 
-	void AStarNode::update(float _deltaTime)
-	{
-		if (!isActive)
-			return;
-
-	}
-
 	void AStarNode::draw(sf::RenderWindow& _window)
 	{
 		if (!isActive)

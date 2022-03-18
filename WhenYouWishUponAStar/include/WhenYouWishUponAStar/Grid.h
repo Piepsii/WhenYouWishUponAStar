@@ -25,6 +25,7 @@ namespace WhenYouWishUponAStar {
 		Cell* getRandomCell(bool _includeBlocked = false);
 		Cell* getCell(int _x, int _y);
 		Cell* getCell(int _index);
+		bool isBlockedAt(sf::Vector2i _pos);
 		std::vector<Cell*> getAllNeighbors(int _x, int _y);
 
 	private:

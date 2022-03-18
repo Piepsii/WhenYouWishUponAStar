@@ -154,6 +154,8 @@
     </PostBuildEvent>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="src\JPSNode.cpp" />
+    <ClCompile Include="src\JPSPath.cpp" />
     <ClCompile Include="src\Restable.cpp" />
     <ClCompile Include="src\CellObject.cpp" />
     <ClCompile Include="src\Component.cpp" />
@@ -190,6 +192,8 @@
     <ClInclude Include="include\WhenYouWishUponAStar\StaticVariables.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\Time.h" />
     <ClInclude Include="include\WhenYouWishUponAStar\Starchaser.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\JPSPath.h" />
+    <ClInclude Include="include\WhenYouWishUponAStar\JPSNode.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

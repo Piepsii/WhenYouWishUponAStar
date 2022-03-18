@@ -2,6 +2,7 @@
 #include "WhenYouWishUponAStar/CellObject.h"
 #include "WhenYouWishUponAStar/Restable.h"
 #include "WhenYouWishUponAStar/Starchaser.h"
+#include "WhenYouWishUponAStar/JPSPath.h"
 
 namespace WhenYouWishUponAStar {
 
@@ -63,6 +64,8 @@ namespace WhenYouWishUponAStar {
 			starchaserObject->setTexture(texture_starchaser);
 			auto path = starchaser.addComponent<AStarPath>();
 			path->setGrid(*grid);
+			auto jpsPath = starchaser.addComponent<JPSPath>();
+			jpsPath->setGrid(*grid);
 			auto starchaserComponent = starchaser.addComponent<Starchaser>();
 			starchaserComponent->sense(*starchaserObject,
 									   *fallenStarObject,

@@ -13,7 +13,6 @@ namespace WhenYouWishUponAStar {
 	{
 	public:
 		AStarNode(Cell& _cell);
-		void update(float _deltaTime);
 		void draw(sf::RenderWindow& _window);
 		void setColor(sf::Color _color);
 		void drawPath();

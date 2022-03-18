@@ -112,6 +112,13 @@ namespace WhenYouWishUponAStar {
 		return cells[_index].get();
 	}
 
+	bool Grid::isBlockedAt(sf::Vector2i _pos)
+	{
+		if(_pos.x < 0 || _pos.y < 0 || _pos.x > columns || _pos.y > rows)
+			return true;
+		return getCell(_pos.x, _pos.y)->isBlocked;
+	}
+
 	std::vector<Cell*> Grid::getAllNeighbors(int _x, int _y)
 	{
 		std::vector<Cell*> result;
