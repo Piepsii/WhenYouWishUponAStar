@@ -86,9 +86,10 @@ namespace WhenYouWishUponAStar {
 			moveCounter += _deltaTime;
 			if (moveCounter >= moveSpeed) {
 				moveCounter = 0.0f;
-				starchaser->moveTo(*path->nextCell(*starchaser->cell));
+				Cell* nextCell = path->nextCell(*starchaser->cell);
+				starchaser->moveTo(*nextCell);
 				if (hasFallenStar) {
-					fallenStar->moveTo(*path->nextCell(*starchaser->cell));
+					fallenStar->moveTo(*nextCell);
 					stamina--;
 				}
 			}
