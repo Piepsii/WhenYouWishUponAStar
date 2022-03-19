@@ -15,13 +15,15 @@ namespace WhenYouWishUponAStar {
 						   CellObject& _fallenStar,
 						   CellObject& _spaceship,
 						   CellObject& _tradingPost,
-						   AStarPath& _path)
+						   AStarPath& _path,
+						   JPSPath& _jpsPath)
 	{
 		starchaser = &_starchaser;
 		fallenStar = &_fallenStar;
 		spaceship = &_spaceship;
 		tradingPost = &_tradingPost;
 		path = &_path;
+		jpsPath = &_jpsPath;
 	}
 
 	void Starchaser::decide()
@@ -80,7 +82,12 @@ namespace WhenYouWishUponAStar {
 	{
 		switch (state) {
 		case StarchaserState::Searching:
-			path->find(starchaser->x, starchaser->y, target->x, target->y);
+			if (usesAStar) {
+				path->find(starchaser->x, starchaser->y, target->x, target->y);
+			}
+			else {
+				jpsPath->find(starchaser->x, starchaser->y, target->x, target->y);
+			}
 			break;
 		case StarchaserState::Moving:
 			moveCounter += _deltaTime;

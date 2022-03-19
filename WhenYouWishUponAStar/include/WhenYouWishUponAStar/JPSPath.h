@@ -21,16 +21,17 @@ namespace WhenYouWishUponAStar {
 
     private:
         int manhattan(int _x, int _y);
-        void identifySuccessors(sf::Vector2i _pos);
+        void identifySuccessors(sf::Vector2i _pos, bool _first = false);
         JPSNode* jump(sf::Vector2i _this, sf::Vector2i _next);
         JPSNode* getNode(sf::Vector2i _pos);
-        JPSNode createNode(sf::Vector2i _pos);
-        bool forcedNeighborCheck(sf::Vector2i _this, sf::Vector2i _direction, sf::Vector2i _offset);
-            
+        JPSNode* createNode(sf::Vector2i _pos);
+        JPSNode* forcedNeighborCheck(sf::Vector2i _this, sf::Vector2i _direction, sf::Vector2i _offset);
+        std::vector<sf::Vector2i> neighborsFromDirection(sf::Vector2i _direction);
+
         sf::Vector2i start;
         sf::Vector2i target;
         sf::Vector2i current;
-        std::vector<JPSNode> open;
+        std::vector<JPSNode*> open;
         std::vector<JPSNode> nodes;
         Grid* grid;
     };

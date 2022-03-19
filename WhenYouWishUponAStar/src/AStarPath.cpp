@@ -157,6 +157,6 @@ namespace WhenYouWishUponAStar {
 
 	int AStarPath::manhattan(int _x, int _y)
 	{
-		return abs(target->x - _x) + abs(target->y - _y) * 10;
+		return (abs(target->x - _x) + abs(target->y - _y)) * 10;
 	}
 }

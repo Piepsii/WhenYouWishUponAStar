@@ -2,6 +2,7 @@
 #include "WhenYouWishUponAStar/Component.h"
 #include "WhenYouWishUponAStar/CellObject.h"
 #include "WhenYouWishUponAStar/AStarPath.h"
+#include "WhenYouWishUponAStar/JPSPath.h"
 
 namespace WhenYouWishUponAStar {
 
@@ -25,13 +26,15 @@ namespace WhenYouWishUponAStar {
                    CellObject& _fallenStar,
                    CellObject& _spaceship,
                    CellObject& _tradingPost,
-                   AStarPath& _path);
+                   AStarPath& _path,
+                   JPSPath& _jpsPath);
         void decide();
         void act(float _deltaTime);
         void update(float _deltaTime);
 
     private:
         bool hasFallenStar = false;
+        bool usesAStar = false;
         int stamina = 5, maxStamina = 5;
         float moveSpeed = 0.3f, moveCounter = 0.0f;
         float restSpeed = 0.3f, restCounter = 0.0f;
@@ -43,5 +46,6 @@ namespace WhenYouWishUponAStar {
         CellObject* spaceship;
         CellObject* tradingPost;
         AStarPath* path;
+        JPSPath* jpsPath;
     };
 }

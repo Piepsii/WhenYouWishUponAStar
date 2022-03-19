@@ -71,7 +71,8 @@ namespace WhenYouWishUponAStar {
 									   *fallenStarObject,
 									   *spaceshipObject,
 									   *tradingPostObject,
-									   *path);
+									   *path,
+									   *jpsPath);
 		}
 		grid->update(_deltaTime);
 		player->update(_deltaTime);

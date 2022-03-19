@@ -114,7 +114,7 @@ namespace WhenYouWishUponAStar {
 
 	bool Grid::isBlockedAt(sf::Vector2i _pos)
 	{
-		if(_pos.x < 0 || _pos.y < 0 || _pos.x > columns || _pos.y > rows)
+		if(_pos.x < 0 || _pos.y < 0 || _pos.x > columns - 1 || _pos.y > rows - 1)
 			return true;
 		return getCell(_pos.x, _pos.y)->isBlocked;
 	}
