@@ -29,7 +29,7 @@ namespace WhenYouWishUponAStar {
         JPSNode* getNode(sf::Vector2i _pos);
         JPSNode* createNode(sf::Vector2i _pos);
         sf::Vector2i jump(sf::Vector2i _this, sf::Vector2i _next);
-        std::vector<sf::Vector2i> neighborsFromDirection(sf::Vector2i _direction);
+        std::vector<sf::Vector2i> neighborsFromDirection(JPSNode* _node);
         std::vector<sf::Vector2i> createPath();
 
         sf::Color colorPath = sf::Color::Green;

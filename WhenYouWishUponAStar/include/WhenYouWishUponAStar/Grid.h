@@ -21,6 +21,7 @@ namespace WhenYouWishUponAStar {
 		void drawEdge(sf::Vector2i _start, sf::Vector2i _end);
 		bool isBlockedAt(int _x, int _y);
 		bool isBlockedAt(sf::Vector2i _pos);
+		bool isWalkableAt(int _x, int _y);
 		Cell* getRandomCell(bool _includeBlocked = false);
 		Cell* getCell(int _x,int _y);
 		Cell* getCell(int _index);

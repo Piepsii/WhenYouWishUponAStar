@@ -72,26 +72,10 @@ namespace WhenYouWishUponAStar {
 	void JPSPath::identifySuccessors(sf::Vector2i _current)
 	{
 		std::vector<sf::Vector2i> neighbors;
-		if (_current == start) {
-			neighbors.push_back(sf::Vector2i(-1, -1));
-			neighbors.push_back(sf::Vector2i( 0, -1));
-			neighbors.push_back(sf::Vector2i( 1, -1));
-
-			neighbors.push_back(sf::Vector2i(-1,  0));
-			neighbors.push_back(sf::Vector2i( 1,  0));
-			
-			neighbors.push_back(sf::Vector2i(-1,  1));
-			neighbors.push_back(sf::Vector2i( 0,  1));
-			neighbors.push_back(sf::Vector2i( 1,  1));
-		}
-		else {
-			sf::Vector2i parentPos = getNode(_current)->parent->pos;
-			sf::Vector2i direction = _current - parentPos;
-			neighbors = neighborsFromDirection(direction);
-		}
+		neighbors = neighborsFromDirection(getNode(_current));
 
 		for (auto& n : neighbors) {
-			sf::Vector2i jumpPoint = jump(_current + n, _current);
+			sf::Vector2i jumpPoint = jump(n, _current);
 			if (jumpPoint != sf::Vector2i(-1, -1)) {
 				for (auto& n : nodes) {
 					if (n.closed) {
@@ -203,38 +187,62 @@ namespace WhenYouWishUponAStar {
 		return false;
 	}
 
-	std::vector<sf::Vector2i> JPSPath::neighborsFromDirection(sf::Vector2i _direction)
+	std::vector<sf::Vector2i> JPSPath::neighborsFromDirection(JPSNode* _node)
 	{
+		JPSNode* parent = _node->parent;
 		std::vector<sf::Vector2i> result;
-		if (_direction.x == 0 && _direction.y == 0)
-			return result;
+		sf::Vector2i nodePos = _node->pos;
+		int x = nodePos.x;
+		int y = nodePos.y;
 
-		sf::Vector2i unitDirection;
-		unitDirection.x = _direction.x != 0 ? _direction.x / abs(_direction.x) : 0;
-		unitDirection.y = _direction.y != 0 ? _direction.y / abs(_direction.y) : 0;
-		sf::Vector2i temp = unitDirection;
-		result.push_back(unitDirection);
-
-		if (unitDirection.x == 0) {
-			unitDirection.x = 1;
-			result.push_back(unitDirection);
-			unitDirection.x = -1;
-			result.push_back(unitDirection);
-			return result;
+		if (parent != nullptr) {
+			sf::Vector2i parentPos = parent->pos;
+			int px = parentPos.x;
+			int py = parentPos.y;
+			int dx = std::clamp((x - px), -1, 1);
+			int dy = std::clamp((y - py), -1, 1);
+			if (dx != 0 && dy != 0) {
+				if (grid->isWalkableAt(x, y + dy))
+					result.push_back(sf::Vector2i(x, y + dy));
+				if (grid->isWalkableAt(x + dx, y))
+					result.push_back(sf::Vector2i(x + dx, y));
+				if (grid->isWalkableAt(x + dx, y + dy))
+					result.push_back(sf::Vector2i(x + dx, y + dy));
+				if (grid->isBlockedAt(x - dx, y))
+					result.push_back(sf::Vector2i(x - dx, y + dy));
+				if (grid->isBlockedAt(x, y - dy))
+					result.push_back(sf::Vector2i(x + dx, y - dy));
+				
+			}
+			else {
+				if (dx == 0) {
+					if (grid->isWalkableAt(x, y + dy))
+						result.push_back(sf::Vector2i(x, y + dy));
+					if (grid->isBlockedAt(x + 1, y))
+						result.push_back(sf::Vector2i(x + 1, y + dy));
+					if (grid->isBlockedAt(x - 1, y))
+						result.push_back(sf::Vector2i(x - 1, y + dy));
+				}
+				else {
+					if (grid->isBlockedAt(x + dx, y))
+						result.push_back(sf::Vector2i(x + dx, y ));
+					if (grid->isBlockedAt(x, y + 1))
+						result.push_back(sf::Vector2i(x + dx, y + 1));
+					if (grid->isBlockedAt(x, y - 1))
+						result.push_back(sf::Vector2i(x + dx, y - 1));
+				}
+			}
 		}
-		if (unitDirection.y == 0) {
-			unitDirection.y = 1;
-			result.push_back(unitDirection);
-			unitDirection.y = -1;
-			result.push_back(unitDirection);
-			return result;
+		else {
+			result.push_back(sf::Vector2i(x - 1, y));
+			result.push_back(sf::Vector2i(x, y - 1));
+			result.push_back(sf::Vector2i(x + 1, y));
+			result.push_back(sf::Vector2i(x, y + 1));
+			result.push_back(sf::Vector2i(x - 1, y - 1));
+			result.push_back(sf::Vector2i(x + 1, y - 1));
+			result.push_back(sf::Vector2i(x - 1, y + 1));
+			result.push_back(sf::Vector2i(x + 1, y + 1));
 		}
-		int x = unitDirection.x;
-		unitDirection.x = 0;
-		result.push_back(unitDirection);
-		unitDirection.x = x;
-		unitDirection.y = 0;
-		result.push_back(unitDirection);
 		return result;
 	}
 

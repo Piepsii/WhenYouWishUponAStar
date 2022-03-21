@@ -162,6 +162,13 @@ namespace WhenYouWishUponAStar {
 		return getCell(_pos.x, _pos.y)->isBlocked;
 	}
 
+	bool Grid::isWalkableAt(int _x, int _y)
+	{
+		if (_x < 0 || _y < 0 || _x > columns - 1 || _y > rows - 1)
+			return false;
+		return !getCell(_x, _y)->isBlocked;
+	}
+
 	std::vector<Cell*> Grid::getAllNeighbors(int _x, int _y)
 	{
 		std::vector<Cell*> result;
