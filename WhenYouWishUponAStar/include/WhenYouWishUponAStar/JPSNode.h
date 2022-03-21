@@ -2,6 +2,8 @@
 
 namespace WhenYouWishUponAStar {
 
+    class Grid;
+
     class JPSNode
     {
     public:
@@ -13,6 +15,7 @@ namespace WhenYouWishUponAStar {
         int h = INT_MAX;
         JPSNode* parent{nullptr};
         bool closed = false;
+
     };
 
 }

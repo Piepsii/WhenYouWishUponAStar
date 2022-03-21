@@ -35,6 +35,32 @@ namespace WhenYouWishUponAStar {
 		for (int i = 0; i < size; i++) {
 			cells[i]->draw(_window);
 		}
+		for (auto& e : edges)
+			_window.draw(e);
+		edges.clear();
+	}
+
+	void Grid::drawPath(sf::Vector2i _pos, sf::Color _color)
+	{
+		getCell(_pos)->pathColor = _color;
+		getCell(_pos)->drawPath = true;
+	}
+
+	void Grid::drawEdge(sf::Vector2i _start, sf::Vector2i _end)
+	{
+		sf::Vector2f pos = getCell(_start)->drawPos;
+		sf::Vector2f length = getCell(_end)->drawPos - getCell(_start)->drawPos;
+		float magnitude = sqrtf(length.x * length.x + length.y * length.y);
+		sf::Vector2f size = sf::Vector2f(magnitude, 6.0f);
+		float angle = atan2(length.y, length.x);
+		float angleInDegree = angle * 180.0f / 3.14159265358979323846f;
+
+		sf::RectangleShape edge = sf::RectangleShape(size);
+		edge.setOrigin(0.0f, 6.0f / 2.0f);
+		edge.setRotation(angleInDegree);
+		edge.setPosition(pos);
+		edge.setFillColor(sf::Color::Green);
+		edges.push_back(edge);
 	}
 
 	uint32_t Grid::Columns()
@@ -110,6 +136,23 @@ namespace WhenYouWishUponAStar {
 	Cell* Grid::getCell(int _index)
 	{
 		return cells[_index].get();
+	}
+
+	Cell* Grid::getCell(sf::Vector2i _pos)
+	{
+		if (_pos.x < 0 || _pos.x >= columns ||
+			_pos.y < 0 || _pos.y >= rows)
+			return nullptr;
+
+		uint32_t index = _pos.y * columns + _pos.x;
+		return cells[index].get();
+	}
+
+	bool Grid::isBlockedAt(int _x, int _y)
+	{
+		if (_x < 0 || _y < 0 || _x > columns - 1 || _y > rows - 1)
+			return true;
+		return getCell(_x, _y)->isBlocked;
 	}
 
 	bool Grid::isBlockedAt(sf::Vector2i _pos)

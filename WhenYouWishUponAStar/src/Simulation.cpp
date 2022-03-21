@@ -80,6 +80,8 @@ namespace WhenYouWishUponAStar {
 			player->hasUpdatedGrid = false;
 			auto path = starchaser.getComponent<AStarPath>();
 			path->isFound = false;
+			auto jpsPath = starchaser.getComponent<JPSPath>();
+			jpsPath->isFound = false;
 		}
 		input->update();
 		spaceship.update(_deltaTime);

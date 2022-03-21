@@ -23,6 +23,16 @@ namespace WhenYouWishUponAStar {
 		if (rand() % 100 < blockChance) {
 			isBlocked = true;
 		}
+
+
+		float radius = width / 6;
+		path = sf::CircleShape(radius);
+		path.setFillColor(sf::Color::White);
+		drawPos.x = x * width + width / 2;
+		drawPos.y = y * height + height / 2;
+		path.setPosition(drawPos);
+		path.setOrigin(radius,
+						radius);
 	}
 
 	void Cell::update(float _deltaTime)
@@ -54,5 +64,9 @@ namespace WhenYouWishUponAStar {
 			return;
 
 		_window.draw(shape);
+		path.setFillColor(pathColor);
+		if (drawPath)
+			_window.draw(path);
+		drawPath = false;
 	}
 }

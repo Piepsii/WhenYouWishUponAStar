@@ -58,7 +58,7 @@ namespace WhenYouWishUponAStar {
 			return;
 		}
 
-		if (path->isFound) {
+		if (path->isFound || jpsPath->isFound) {
 			state = StarchaserState::Moving;
 			return;
 		} 
@@ -90,16 +90,24 @@ namespace WhenYouWishUponAStar {
 			}
 			break;
 		case StarchaserState::Moving:
-			moveCounter += _deltaTime;
+			/*moveCounter += _deltaTime;
 			if (moveCounter >= moveSpeed) {
 				moveCounter = 0.0f;
-				Cell* nextCell = path->nextCell(*starchaser->cell);
+				Cell* nextCell;
+				if (usesAStar) {
+					nextCell = path->nextCell(*starchaser->cell);
+				}
+				else {
+					auto pos = jpsPath->nextPosition(sf::Vector2i(starchaser->cell->x,
+													   starchaser->cell->y));
+					nextCell = starchaser->grid->getCell(pos);
+				}
 				starchaser->moveTo(*nextCell);
 				if (hasFallenStar) {
 					fallenStar->moveTo(*nextCell);
 					stamina--;
 				}
-			}
+			}*/
 			break;
 		case StarchaserState::Selling:
 			hasFallenStar = false;

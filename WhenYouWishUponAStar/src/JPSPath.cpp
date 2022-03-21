@@ -9,51 +9,70 @@ namespace WhenYouWishUponAStar {
 		nodes.reserve(200);
 	}
 
+	void JPSPath::draw(sf::RenderWindow& _window)
+	{
+		for (auto& n : nodes) {
+			grid->drawPath(n.pos, colorNodes);
+			if (n.parent != nullptr)
+				grid->drawEdge(n.pos, n.parent->pos);
+		}
+		/*for (auto& pos : path) {
+			grid->drawPath(pos, colorPath);
+		}*/
+	}
+
 	void JPSPath::setGrid(Grid& _grid)
 	{
 		grid = &_grid;
 	}
 
-	std::vector<sf::Vector2i> JPSPath::find(int _sX, int _sY, int _tX, int _tY)
+	bool JPSPath::find(int _sX, int _sY, int _tX, int _tY)
 	{
+		clear();
 		start = sf::Vector2i(_sX, _sY);
 		target = sf::Vector2i(_tX, _tY);
 		current = start;
-		open.push_back(createNode(start));
+		createNode(start);
 
-		while (!open.empty()) 
+		while (containsOpenNodes()) 
 		{
 			int lowest = INT_MAX;
-			int indexOfLowest = -1;
-			if (open.size() == 0)
-				return std::vector<sf::Vector2i>();
-			for (int i = 0; i < open.size(); i++) 
+			int indexOfLowest = 0;
+			for (int i = 0; i < nodes.size(); i++) 
 			{
-				if (open[i]->closed)
+				if (nodes[i].closed)
 					continue;
-				if (open[i]->f < lowest) 
+				if (nodes[i].f < lowest) 
 				{
-					lowest = open[i]->f;
+					lowest = nodes[i].f;
 					indexOfLowest = i;
 				}
 			}
-			current = open.at(indexOfLowest)->pos;
+			current = nodes.at(indexOfLowest).pos;
 			if (current == target) 
 			{
 				// to-do: create vector of positions
-		return std::vector<sf::Vector2i>();
-			}
-			if (current == start) {
-				identifySuccessors(current, true);
+				path = createPath();
+				isFound = true;
+				return true;
 			}
 			identifySuccessors(current);
 		}
+		isFound = false;
+		return false;
 	}
 
-	void JPSPath::identifySuccessors(sf::Vector2i _current, bool _first)
+	void JPSPath::clear()
+	{
+		isFound = false;
+		nodes.clear();
+		path.clear();
+	}
+
+	void JPSPath::identifySuccessors(sf::Vector2i _current)
 	{
 		std::vector<sf::Vector2i> neighbors;
-		if (_first) {
+		if (_current == start) {
 			neighbors.push_back(sf::Vector2i(-1, -1));
 			neighbors.push_back(sf::Vector2i( 0, -1));
 			neighbors.push_back(sf::Vector2i( 1, -1));
@@ -72,64 +91,89 @@ namespace WhenYouWishUponAStar {
 		}
 
 		for (auto& n : neighbors) {
-			jump(current, n);
+			sf::Vector2i jumpPoint = jump(_current + n, _current);
+			if (jumpPoint != sf::Vector2i(-1, -1)) {
+				for (auto& n : nodes) {
+					if (n.closed) {
+						if (getNode(jumpPoint) == &n)
+							continue;
+					}
+				}
+				int g = calcG(_current, jumpPoint, getNode(_current)->g);
+				int h = manhattan(jumpPoint.x, jumpPoint.y);
+
+				bool found = false;
+				for (auto& n : nodes) {
+					if (!n.closed && n.pos == jumpPoint) {
+						found = true;
+						if (g < n.g) {
+							n.g = g;
+							n.h = h;
+							n.f = g + h;
+							n.parent = getNode(_current);
+						}
+					}
+				}
+				if (!found) {
+					JPSNode* n = createNode(jumpPoint);
+					n->g = g;
+					n->h = h;
+					n->f = g + h;
+					n->parent = getNode(_current);
+
+				}
+			}
 		}
 		getNode(_current)->closed = true;
 	}
 
-	JPSNode* JPSPath::jump(sf::Vector2i _this, sf::Vector2i _direction)
+	sf::Vector2i JPSPath::jump(sf::Vector2i _this, sf::Vector2i _parent)
 	{
+		sf::Vector2i error = sf::Vector2i(-1, -1);
+		sf::Vector2i _direction = _this - _parent;
 		if (grid->isBlockedAt(_this))
-			return nullptr;
+			return error;
 
-		sf::Vector2i next = _this + _direction;
-		if (next == target)
-			return createNode(next);
+		if (_this == target) {
+			return _this;
+		}
 
 		// Diagonal Case
 		if (_direction.x != 0 && _direction.y != 0) {
-			JPSNode* forcedNeighborNodeH = jump(next, sf::Vector2i(_direction.x, 0));
-			if (forcedNeighborNodeH != nullptr) {
-				JPSNode* secondary = createNode(_this);
-				forcedNeighborNodeH->parent = secondary;
-				JPSNode* currentNode = getNode(current);
-				secondary->parent = currentNode;
-				return forcedNeighborNodeH;
+			sf::Vector2i offsetX = sf::Vector2i(-_direction.x, 0);
+			sf::Vector2i offsetY = sf::Vector2i(0, -_direction.y);
+			if (forcedNeighborCheck(_this, _direction, offsetX) ||
+				forcedNeighborCheck(_this, _direction, offsetY))
+			{
+				return _this;
 			}
-			JPSNode* forcedNeighborNodeV = jump(next, sf::Vector2i(0, _direction.y));
-			if (forcedNeighborNodeV != nullptr) {
-				JPSNode* secondary = createNode(_this);
-				forcedNeighborNodeV->parent = secondary;
-				JPSNode* currentNode = getNode(current);
-				secondary->parent = currentNode;
-				return forcedNeighborNodeV;
+			sf::Vector2i directionX = sf::Vector2i(_this.x + _direction.x, _this.y);
+			sf::Vector2i directionY = sf::Vector2i(_this.x, _this.y + _direction.y);
+			if (jump(directionX, _this) != error ||
+				jump(directionY, _this) != error) {
+				return _this;
 			}
 		}
-		// Horizontal Case
-		if (_direction.x != 0 && _direction.y == 0) {
-			sf::Vector2i offsetPos = sf::Vector2i(0, 1);
-			JPSNode* jumpPoint = forcedNeighborCheck(_this, _direction, offsetPos);
-			if (jumpPoint != nullptr)
-				return jumpPoint;
-			sf::Vector2i offsetNeg = sf::Vector2i(0, -1);
-			jumpPoint = forcedNeighborCheck(_this, _direction, offsetNeg);
-			if (jumpPoint != nullptr)
-				return jumpPoint;
-		}
-		// Vertical Case
-		if(_direction.x == 0 && _direction.y != 0) {
-			sf::Vector2i offsetPos = sf::Vector2i(1, 0);
-			JPSNode* jumpPoint = forcedNeighborCheck(_this, _direction, offsetPos);
-			if (jumpPoint != nullptr)
-				return jumpPoint;
+		else{
+			if (_direction.x != 0) {
+				// Horizontal Case
+				sf::Vector2i offsetPos = sf::Vector2i(0, 1);
+				sf::Vector2i offsetNeg = sf::Vector2i(0, -1);
+				if (forcedNeighborCheck(_this, _direction, offsetPos) ||
+					forcedNeighborCheck(_this, _direction, offsetNeg))
+					return _this;
+				}
+			else {
+				// Vertical Case
+				sf::Vector2i offsetPos = sf::Vector2i(1, 0);
+				sf::Vector2i offsetNeg = sf::Vector2i(-1, 0);
+				if (forcedNeighborCheck(_this, _direction, offsetPos) ||
+					forcedNeighborCheck(_this, _direction, offsetNeg))
+					return _this;
 
-			sf::Vector2i offsetNeg = sf::Vector2i(-1, 0);
-			jumpPoint = forcedNeighborCheck(_this, _direction, offsetNeg);
-			if (jumpPoint != nullptr)
-				return jumpPoint;
+			}
 		}
-		
-		return jump(next, _direction);
+		return jump(_this + _direction, _this);
 	}
 
 	JPSNode* JPSPath::getNode(sf::Vector2i _pos)
@@ -150,21 +194,13 @@ namespace WhenYouWishUponAStar {
 		return &nodes.back();
 	}
 
-	JPSNode* JPSPath::forcedNeighborCheck(sf::Vector2i _this, sf::Vector2i _direction, sf::Vector2i _offset)
+	bool JPSPath::forcedNeighborCheck(sf::Vector2i _this, sf::Vector2i _direction, sf::Vector2i _offset)
 	{
-		if (grid->isBlockedAt(_this + _offset)) {
-			auto forcedNeighbor = _this + _direction + _offset;
-			if (!grid->isBlockedAt(forcedNeighbor)) {
-				JPSNode* secondary = createNode(_this);
-				JPSNode* forcedNeighborNode = createNode(forcedNeighbor);
-				open.push_back(forcedNeighborNode);
-				forcedNeighborNode->parent = secondary;
-				JPSNode* currentNode = getNode(current);
-				secondary->parent = currentNode;
-				return secondary;
-			}
+		if (!grid->isBlockedAt(_this + _direction + _offset)
+			&& grid->isBlockedAt(_this + _offset)) { 
+			return true;
 		}
-		return nullptr;
+		return false;
 	}
 
 	std::vector<sf::Vector2i> JPSPath::neighborsFromDirection(sf::Vector2i _direction)
@@ -176,6 +212,7 @@ namespace WhenYouWishUponAStar {
 		sf::Vector2i unitDirection;
 		unitDirection.x = _direction.x != 0 ? _direction.x / abs(_direction.x) : 0;
 		unitDirection.y = _direction.y != 0 ? _direction.y / abs(_direction.y) : 0;
+		sf::Vector2i temp = unitDirection;
 		result.push_back(unitDirection);
 
 		if (unitDirection.x == 0) {
@@ -201,9 +238,56 @@ namespace WhenYouWishUponAStar {
 		return result;
 	}
 
+	int JPSPath::calcG(sf::Vector2i _current, sf::Vector2i _new, int _g)
+	{
+		if (_current == _new)
+			return _g;
+		if (_current.x == _new.x || _current.y == _new.y) {
+			_current.x += std::clamp(_new.x - _current.x, -1, 1);
+			_current.y += std::clamp(_new.y - _current.y, -1, 1);
+			_g = calcG(_current, _new, _g + 10);
+		}
+		else {
+			_current.x += std::clamp(_new.x - _current.x, -1, 1);
+			_current.y += std::clamp(_new.y - _current.y, -1, 1);
+			_g = calcG(_current, _new, _g + 14);
+		}
+		return _g;
+	}
+
+	bool JPSPath::containsOpenNodes()
+	{
+		for (auto& n : nodes) {
+			if (!n.closed) {
+				return true;
+			}
+		}
+		return false;
+	}
+
+	std::vector<sf::Vector2i> JPSPath::createPath()
+	{
+		std::vector<sf::Vector2i> result;
+		JPSNode* current = getNode(target);
+		result.push_back(current->pos);
+		while (current->parent != nullptr) {
+			sf::Vector2i distance = current->parent->pos - current->pos;
+			distance.x = std::clamp(distance.x, -1, 1);
+			distance.y = std::clamp(distance.y, -1, 1);
+			sf::Vector2i currentPos = current->pos;
+			while (currentPos != current->parent->pos) {
+				currentPos += distance;
+				result.push_back(currentPos);
+			}
+			current = current->parent;
+		}
+		std::reverse(result.begin(), result.end());
+		return result;
+	}
+
 	sf::Vector2i JPSPath::nextPosition(sf::Vector2i _current)
 	{
-		return sf::Vector2i();
+		return sf::Vector2i(0, 0);
 	}
 
 	int JPSPath::manhattan(int _x, int _y)
