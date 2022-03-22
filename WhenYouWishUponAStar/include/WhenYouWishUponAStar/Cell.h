@@ -24,7 +24,7 @@ namespace WhenYouWishUponAStar {
 
 	private:
 		int blockChance = 20;
-		float outlineThickness = 3.0f;
+		float outlineThickness = 1.0f;
 		sf::RectangleShape shape;
 		sf::CircleShape path;
 		sf::Color normalColor = sf::Color::Black;

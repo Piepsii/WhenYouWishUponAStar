@@ -34,6 +34,7 @@ namespace WhenYouWishUponAStar {
 		std::vector<Cell*> getAllNeighbors(int _x,int _y);
 
 	private:
+		float edgeThickness = 1.0f;
 		const static uint32_t columns = COLUMNS;
 		const static uint32_t rows = ROWS;
 		const static uint32_t size = columns * rows;

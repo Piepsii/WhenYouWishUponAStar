@@ -39,8 +39,7 @@ namespace WhenYouWishUponAStar {
 
 	void CellObject::update(float _deltaTime)
 	{
-		x = cell->x;
-		y = cell->y;
+		cell = grid->getCell(x, y);
 	}
 	void CellObject::draw(sf::RenderWindow& _window)
 	{
@@ -52,6 +51,11 @@ namespace WhenYouWishUponAStar {
 		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
 		sprite.setScale(cell->width / _texture.getSize().x, cell->height / _texture.getSize().y);
 	}
+	void CellObject::move()
+	{
+		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
+	}
+
 	void CellObject::moveTo(Cell& _cell)
 	{
 		if (&_cell == nullptr)

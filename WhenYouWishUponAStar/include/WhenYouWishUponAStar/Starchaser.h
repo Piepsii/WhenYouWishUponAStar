@@ -35,9 +35,9 @@ namespace WhenYouWishUponAStar {
     private:
         bool hasFallenStar = false;
         bool usesAStar = false;
-        int stamina = 5, maxStamina = 5;
-        float moveSpeed = 0.3f, moveCounter = 0.0f;
-        float restSpeed = 0.3f, restCounter = 0.0f;
+        int stamina = WIDTH / 10, maxStamina = WIDTH / 10;
+        float moveSpeed = 0.1f, moveCounter = 0.0f;
+        float restSpeed = 0.1f, restCounter = 0.0f;
 
         StarchaserState state = StarchaserState::Searching;
         Cell* target;

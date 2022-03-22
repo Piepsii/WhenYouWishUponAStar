@@ -29,6 +29,7 @@ namespace WhenYouWishUponAStar {
 		Simulation();
 		~Simulation();
 
+		bool isPaused = true;
 		bool hasStarted = false;
 		InputManager* input = nullptr;
 		std::unique_ptr<Grid> grid = nullptr;
@@ -37,6 +38,7 @@ namespace WhenYouWishUponAStar {
 		GameObject tradingPost;
 		GameObject fallenStar;
 		GameObject starchaser;
+		std::vector<GameObject*> gameObjects;
 
 		sf::Texture texture_spaceship;
 		sf::Texture texture_tradingPost;

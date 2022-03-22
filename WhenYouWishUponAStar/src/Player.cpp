@@ -12,34 +12,52 @@ namespace WhenYouWishUponAStar {
 		if (!isActive)
 			return;
 		handleInput();
-		if (previousX != selectX || previousY != selectY) {
+		if (previousX != hoverX || previousY != hoverY) {
 			if (selectedCell)
 				selectedCell->isSelected = false;
-			selectedCell = grid->getCell(selectX, selectY);
+			selectedCell = grid->getCell(hoverX, hoverY);
 			selectedCell->isSelected = true;
 		}
-		previousX = selectX;
-		previousY = selectY;
+		previousX = hoverX;
+		previousY = hoverY;
 	}
 
 	void Player::handleInput() {
 		if (input->isKeyPressed(sf::Keyboard::Key::Up)) {
-			selectY--;
+			hoverY--;
 		}
 		else if (input->isKeyPressed(sf::Keyboard::Key::Down)) {
-			selectY++;
+			hoverY++;
 		}
 		else if (input->isKeyPressed(sf::Keyboard::Key::Left)) {
-			selectX--;
+			hoverX--;
 		}
 		else if (input->isKeyPressed(sf::Keyboard::Key::Right)) {
-			selectX++;
+			hoverX++;
 		}
 		else if (input->isKeyPressed(sf::Keyboard::Key::Enter)) {
 			selectedCell->isBlocked = !selectedCell->isBlocked;
 			hasUpdatedGrid = true;
 		}
-		selectX = std::clamp(selectX, 0, COLUMNS - 1);
-		selectY = std::clamp(selectY, 0, ROWS - 1);
+		else if (input->isKeyPressed(sf::Keyboard::Key::Space)) {
+			needsPause = !needsPause;
+		}
+		else if (input->isKeyPressed(sf::Keyboard::Key::F)) {
+			hasSelected = true;
+			if (!isDragging) {
+				selected.x = hoverX;
+				selected.y = hoverY;
+			}
+		}
+		hoverX = std::clamp(hoverX, 0, COLUMNS - 1);
+		hoverY = std::clamp(hoverY, 0, ROWS - 1);
+	}
+	sf::Vector2i Player::getHovered()
+	{
+		return sf::Vector2i(hoverX, hoverY);
+	}
+	sf::Vector2i Player::getSelected()
+	{
+		return selected;
 	}
 }

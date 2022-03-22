@@ -51,12 +51,12 @@ namespace WhenYouWishUponAStar {
 		sf::Vector2f pos = getCell(_start)->drawPos;
 		sf::Vector2f length = getCell(_end)->drawPos - getCell(_start)->drawPos;
 		float magnitude = sqrtf(length.x * length.x + length.y * length.y);
-		sf::Vector2f size = sf::Vector2f(magnitude, 6.0f);
+		sf::Vector2f size = sf::Vector2f(magnitude, edgeThickness);
 		float angle = atan2(length.y, length.x);
 		float angleInDegree = angle * 180.0f / 3.14159265358979323846f;
 
 		sf::RectangleShape edge = sf::RectangleShape(size);
-		edge.setOrigin(0.0f, 6.0f / 2.0f);
+		edge.setOrigin(0.0f, edgeThickness / 2.0f);
 		edge.setRotation(angleInDegree);
 		edge.setPosition(pos);
 		edge.setFillColor(sf::Color::Green);

@@ -11,6 +11,10 @@ namespace WhenYouWishUponAStar {
 		srand(time(0));
 		grid = std::make_unique<Grid>();
 		player = std::make_unique<Player>();
+		gameObjects.push_back(&spaceship);
+		gameObjects.push_back(&tradingPost);
+		gameObjects.push_back(&fallenStar);
+		gameObjects.push_back(&starchaser);
 	}
 
 	Simulation::~Simulation()
@@ -76,6 +80,7 @@ namespace WhenYouWishUponAStar {
 		}
 		grid->update(_deltaTime);
 		player->update(_deltaTime);
+		isPaused = player->needsPause;
 		if (player->hasUpdatedGrid) {
 			player->hasUpdatedGrid = false;
 			auto path = starchaser.getComponent<AStarPath>();
@@ -83,9 +88,43 @@ namespace WhenYouWishUponAStar {
 			auto jpsPath = starchaser.getComponent<JPSPath>();
 			jpsPath->isFound = false;
 		}
+		if (player->hasSelected) {
+			player->hasSelected = false;
+			if (!player->isDragging) {
+				for (auto& go : gameObjects) {
+					auto co = go->getComponent<CellObject>();
+					if (co != nullptr) {
+						if (sf::Vector2i(co->x, co->y) == player->getSelected()) {
+							player->isDragging = true;
+						}
+					}
+				}
+			}
+			else{
+				for (auto& go : gameObjects) {
+					auto co = go->getComponent<CellObject>();
+					if (co != nullptr) {
+						if (sf::Vector2i(co->x, co->y) == player->getSelected()) {
+							co->x = player->getHovered().x;
+							co->y = player->getHovered().y;
+							co->move();
+							continue;
+						}
+						if (sf::Vector2i(co->x, co->y) == player->getHovered()) {
+							co->x = player->getSelected().x;
+							co->y = player->getSelected().y;
+							co->move();
+						}
+					}
+
+				}
+				player->isDragging = false;
+			}
+		}
 		input->update();
+		if (!isPaused)
+			starchaser.update(_deltaTime);
 		spaceship.update(_deltaTime);
-		starchaser.update(_deltaTime);
 		fallenStar.update(_deltaTime);
 		tradingPost.update(_deltaTime);
 		return true;

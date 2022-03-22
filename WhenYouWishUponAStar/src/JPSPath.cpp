@@ -6,7 +6,7 @@ namespace WhenYouWishUponAStar {
 	JPSPath::JPSPath(GameObject* _parent, const ComponentFamilyId _id)
 		: ComponentBase(_parent, _id)
 	{
-		nodes.reserve(200);
+		nodes.reserve(1000);
 	}
 
 	void JPSPath::draw(sf::RenderWindow& _window)
@@ -16,9 +16,9 @@ namespace WhenYouWishUponAStar {
 			if (n.parent != nullptr)
 				grid->drawEdge(n.pos, n.parent->pos);
 		}
-		/*for (auto& pos : path) {
+		for (auto& pos : path) {
 			grid->drawPath(pos, colorPath);
-		}*/
+		}
 	}
 
 	void JPSPath::setGrid(Grid& _grid)
@@ -51,7 +51,6 @@ namespace WhenYouWishUponAStar {
 			current = nodes.at(indexOfLowest).pos;
 			if (current == target) 
 			{
-				// to-do: create vector of positions
 				path = createPath();
 				isFound = true;
 				return true;
@@ -71,6 +70,8 @@ namespace WhenYouWishUponAStar {
 
 	void JPSPath::identifySuccessors(sf::Vector2i _current)
 	{
+		if (nodes.size() > 990)
+			int i = 1;
 		std::vector<sf::Vector2i> neighbors;
 		neighbors = neighborsFromDirection(getNode(_current));
 
@@ -104,7 +105,6 @@ namespace WhenYouWishUponAStar {
 					n->h = h;
 					n->f = g + h;
 					n->parent = getNode(_current);
-
 				}
 			}
 		}
@@ -201,6 +201,7 @@ namespace WhenYouWishUponAStar {
 			int py = parentPos.y;
 			int dx = std::clamp((x - px), -1, 1);
 			int dy = std::clamp((y - py), -1, 1);
+
 			if (dx != 0 && dy != 0) {
 				if (grid->isWalkableAt(x, y + dy))
 					result.push_back(sf::Vector2i(x, y + dy));
@@ -224,8 +225,8 @@ namespace WhenYouWishUponAStar {
 						result.push_back(sf::Vector2i(x - 1, y + dy));
 				}
 				else {
-					if (grid->isBlockedAt(x + dx, y))
-						result.push_back(sf::Vector2i(x + dx, y ));
+					if (grid->isWalkableAt(x + dx, y))
+						result.push_back(sf::Vector2i(x + dx, y));
 					if (grid->isBlockedAt(x, y + 1))
 						result.push_back(sf::Vector2i(x + dx, y + 1));
 					if (grid->isBlockedAt(x, y - 1))
@@ -295,9 +296,16 @@ namespace WhenYouWishUponAStar {
 
 	sf::Vector2i JPSPath::nextPosition(sf::Vector2i _current)
 	{
-		return sf::Vector2i(0, 0);
-	}
+		if (target == _current)
+			return target;
 
+		for (int i = 0; i < path.size(); i++) {
+			if (path[i] == _current)
+				return path[i + 1];
+		}
+		return sf::Vector2i(-1, -1);
+	}
+	 
 	int JPSPath::manhattan(int _x, int _y)
 	{
 		return (abs(target.x - _x) + abs(target.y - _y)) * 10;

@@ -32,6 +32,7 @@ namespace WhenYouWishUponAStar {
 			&& target == fallenStar->cell) {
 			hasFallenStar = true;
 			path->isFound = false;
+			jpsPath->isFound = false;
 		}
 
 		if (starchaser->cell == tradingPost->cell
@@ -39,6 +40,7 @@ namespace WhenYouWishUponAStar {
 			&& hasFallenStar) {
 			state = StarchaserState::Selling;
 			path->isFound = false;
+			jpsPath->isFound = false;
 			return;
 		}
 
@@ -47,6 +49,7 @@ namespace WhenYouWishUponAStar {
 			&& stamina < maxStamina) {
 			state = StarchaserState::Resting;
 			path->isFound = false;
+			jpsPath->isFound = false;
 			return;
 		}
 
@@ -90,7 +93,7 @@ namespace WhenYouWishUponAStar {
 			}
 			break;
 		case StarchaserState::Moving:
-			/*moveCounter += _deltaTime;
+			moveCounter += _deltaTime;
 			if (moveCounter >= moveSpeed) {
 				moveCounter = 0.0f;
 				Cell* nextCell;
@@ -107,7 +110,7 @@ namespace WhenYouWishUponAStar {
 					fallenStar->moveTo(*nextCell);
 					stamina--;
 				}
-			}*/
+			}
 			break;
 		case StarchaserState::Selling:
 			hasFallenStar = false;

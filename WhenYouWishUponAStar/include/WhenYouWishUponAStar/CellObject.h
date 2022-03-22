@@ -20,6 +20,7 @@ namespace WhenYouWishUponAStar {
 		void update(float _deltaTime);
 		void draw(sf::RenderWindow& _window);
 		void setTexture(sf::Texture& _texture);
+		void move();
 		void moveTo(Cell& _cell);
 		void setRotation(float _angle);
 
