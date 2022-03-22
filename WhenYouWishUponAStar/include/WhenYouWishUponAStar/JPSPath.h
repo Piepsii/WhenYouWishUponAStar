@@ -16,6 +16,7 @@ namespace WhenYouWishUponAStar {
         void setGrid(Grid& _grid);
         bool find(int _sX, int _sY, int _tX, int _tY);
         sf::Vector2i nextPosition(sf::Vector2i _current);
+        void forget();
 
         bool isFound = false;
 

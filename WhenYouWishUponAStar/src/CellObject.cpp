@@ -60,6 +60,8 @@ namespace WhenYouWishUponAStar {
 	{
 		if (&_cell == nullptr)
 			return;
+		x = _cell.x;
+		y = _cell.y;
 		cell = &_cell;
 		sprite.setPosition(cell->x * cell->width, cell->y * cell->height);
 	}

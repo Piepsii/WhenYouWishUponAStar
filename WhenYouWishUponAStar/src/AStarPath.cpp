@@ -120,6 +120,12 @@ namespace WhenYouWishUponAStar {
 		return iterator->cell;
 	}
 
+	void AStarPath::forget()
+	{
+		isFound = false;
+		clear();
+	}
+
 	void AStarPath::clear()
 	{
 		isFound = false;

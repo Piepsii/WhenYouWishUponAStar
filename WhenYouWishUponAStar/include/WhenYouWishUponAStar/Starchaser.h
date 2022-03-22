@@ -32,12 +32,12 @@ namespace WhenYouWishUponAStar {
         void act(float _deltaTime);
         void update(float _deltaTime);
 
+        bool usesAStar = true;
     private:
         bool hasFallenStar = false;
-        bool usesAStar = false;
-        int stamina = WIDTH / 10, maxStamina = WIDTH / 10;
-        float moveSpeed = 0.1f, moveCounter = 0.0f;
-        float restSpeed = 0.1f, restCounter = 0.0f;
+        int stamina = COLUMNS / 10, maxStamina = COLUMNS / 10;
+        float moveSpeed = 0.3f, moveCounter = 0.0f;
+        float restSpeed = 0.3f, restCounter = 0.0f;
 
         StarchaserState state = StarchaserState::Searching;
         Cell* target;

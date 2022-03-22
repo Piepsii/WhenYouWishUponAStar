@@ -15,10 +15,11 @@ namespace WhenYouWishUponAStar {
 		sf::Vector2i getHovered();
 		sf::Vector2i getSelected();
 
+		bool usesAStar = false;
 		bool needsPause = true;
-		bool hasUpdatedGrid = false;
-		bool hasSelected = false;
 		bool isDragging = false;
+		bool hasSelected = false;
+		bool hasUpdatedGrid = false;
 		InputManager* input = nullptr;
 		Grid* grid = nullptr;
 	private:

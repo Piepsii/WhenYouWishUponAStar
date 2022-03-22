@@ -121,6 +121,14 @@ namespace WhenYouWishUponAStar {
 				player->isDragging = false;
 			}
 		}
+		auto starchaserComp = starchaser.getComponent<Starchaser>();
+		if (starchaserComp->usesAStar != player->usesAStar) {
+			auto path = starchaser.getComponent<AStarPath>();
+			path->forget();
+			auto jpsPath = starchaser.getComponent<JPSPath>();
+			jpsPath->forget();
+		}
+		starchaserComp->usesAStar = player->usesAStar;
 		input->update();
 		if (!isPaused)
 			starchaser.update(_deltaTime);

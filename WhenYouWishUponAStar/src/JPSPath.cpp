@@ -305,6 +305,12 @@ namespace WhenYouWishUponAStar {
 		}
 		return sf::Vector2i(-1, -1);
 	}
+
+	void JPSPath::forget()
+	{
+		isFound = false;
+		clear();
+	}
 	 
 	int JPSPath::manhattan(int _x, int _y)
 	{

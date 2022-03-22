@@ -18,7 +18,7 @@ namespace WhenYouWishUponAStar {
 		void setGrid(Grid& _grid);
 		AStarNode* find(int _sX, int _sY, int _tX, int _tY);
 		Cell* nextCell(Cell& _currentCell);
-
+		void forget();
 		bool isFound = false;
 
 	private:

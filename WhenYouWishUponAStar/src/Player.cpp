@@ -49,6 +49,9 @@ namespace WhenYouWishUponAStar {
 				selected.y = hoverY;
 			}
 		}
+		else if (input->isKeyPressed(sf::Keyboard::Key::P)) {
+			usesAStar = !usesAStar;
+		}
 		hoverX = std::clamp(hoverX, 0, COLUMNS - 1);
 		hoverY = std::clamp(hoverY, 0, ROWS - 1);
 	}
